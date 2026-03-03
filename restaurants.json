@@ -14,7 +14,8 @@
     "reason": "나오시마 평점 4.9점. 제철 식재료로 만드는 정갈하고 정성스러운 정식.",
     "image": "images/toshi.jpg",
     "mapUrl": "https://maps.app.goo.gl/FKFqMw3xLyEzPSyC8",
-    "warningImage": "images/toshi-directions.jpg"
+    "warningImage": "images/toshi-directions.jpg",
+    "warningOpen": true
   },
   {
     "name": "사라장",
