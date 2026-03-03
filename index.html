@@ -364,12 +364,12 @@
   </header>
 
   <!-- ─── 지도: 구글맵 실좌표 기반 ────────────────────
-       bounding box: lon 133.988→x=15  134.001→x=425
-                     lat 34.465→y=10   34.455→y=265
-       scale_lon = 410/0.013 = 31,540 px/deg
-       scale_lat = 255/0.010 = 25,500 px/deg
-       x = 15 + (lon - 133.988) × 31540
-       y = 10 + (34.465 - lat) × 25500
+       bounding box: lon 133.989→x=20  134.001→x=420
+                     lat 34.465→y=20   34.454→y=260
+       scale_lon = 400/0.012 = 33,333 px/deg
+       scale_lat = 240/0.011 = 21,818 px/deg
+       x = 20 + (lon - 133.989) × 33333
+       y = 20 + (34.465 - lat) × 21818
        ───────────────────────────────────────────── -->
   <section class="map-section">
     <p class="map-section-title">혼무라 일대 위치 안내</p>
@@ -385,142 +385,180 @@
         <!-- 배경 -->
         <rect width="440" height="280" fill="#FFF6EE"/>
 
-        <!-- 세토내해 — lon 134.000 → x=393 -->
-        <path d="M 393 0 C 388 50 383 100 380 140 C 377 180 382 230 388 280 L 440 280 L 440 0 Z"
+        <!-- 세토내해 — lon 134.000 → x=387 -->
+        <path d="M 392 0 C 388 50 383 108 375 148 C 368 185 372 235 378 280 L 440 280 L 440 0 Z"
               fill="#D6EAF8" opacity="0.75"/>
-        <text x="415" y="95" font-size="8" fill="#8BBDD4" opacity="0.8"
+        <text x="415" y="90" font-size="8" fill="#8BBDD4" opacity="0.8"
               writing-mode="vertical-rl" letter-spacing="2">세토내해</text>
-        <text x="405" y="52"  font-size="9" fill="#9DC8E0" opacity="0.6">〰</text>
-        <text x="407" y="152" font-size="9" fill="#9DC8E0" opacity="0.5">〰</text>
-        <text x="403" y="240" font-size="9" fill="#9DC8E0" opacity="0.55">〰</text>
+        <text x="400" y="50"  font-size="9" fill="#9DC8E0" opacity="0.6">〰</text>
+        <text x="398" y="155" font-size="9" fill="#9DC8E0" opacity="0.5">〰</text>
+        <text x="400" y="245" font-size="9" fill="#9DC8E0" opacity="0.55">〰</text>
 
         <!-- 방위 -->
         <text x="16" y="22" font-size="10" fill="#C0A898" font-weight="700">N ↑</text>
 
         <!-- ── 도로망 ──
-             N-S 메인:      x=299, y 75→225
-             이시바시 E-W:  y=81,  x 236→299
-             북 E-W:        y=109, x 220→390
-             토시 방향:     y=129, x 140→299
-             중앙 E-W:      y=140, x 195→390
-             남 E-W:        y=175, x 195→375
-             남서 E-W:      y=195, x 200→299
-             긴자 E-W:      y=214, x 237→268
+             x = 20 + (lon - 133.989) × 33333
+             y = 20 + (34.465 - lat) × 21818
+             N-S 주도로:           lon≈133.997 → x=288, y 48→222
+             NW 이시바시 소로:      (222,80) → (288,83)
+             N 항구 접근로 (ENE):   (195,92) → (385,85)
+             W 마을로 (토시·하이샤): (100,126) → (288,131)
+             E 마을로 (고오신사):    (288,133) → (352,137)
+             S E-W:                (215,177) → (352,182)
+             Route 256 (해안로):    M 385 85 C 382 120 375 155 366 185 C 360 208 358 232 360 255
         -->
-        <line x1="299" y1="75"  x2="299" y2="225"
-              stroke="#EDD9C8" stroke-width="11" stroke-linecap="round"/>
-        <line x1="236" y1="81"  x2="299" y2="81"
-              stroke="#EDD9C8" stroke-width="7"  stroke-linecap="round"/>
-        <line x1="220" y1="109" x2="390" y2="109"
+        <!-- N-S 주도로 -->
+        <line x1="288" y1="48"  x2="288" y2="222"
+              stroke="#EDD9C8" stroke-width="10" stroke-linecap="round"/>
+        <!-- NW 이시바시 소로 -->
+        <line x1="222" y1="80"  x2="288" y2="83"
+              stroke="#EDD9C8" stroke-width="6"  stroke-linecap="round"/>
+        <!-- N 항구 접근로 (항구 방향 ENE) -->
+        <line x1="195" y1="92"  x2="385" y2="85"
               stroke="#EDD9C8" stroke-width="9"  stroke-linecap="round"/>
-        <line x1="140" y1="129" x2="299" y2="129"
+        <!-- W 마을로 (토시·하이샤) -->
+        <line x1="100" y1="126" x2="288" y2="131"
               stroke="#EDD9C8" stroke-width="7"  stroke-linecap="round"/>
-        <line x1="195" y1="140" x2="390" y2="140"
-              stroke="#EDD9C8" stroke-width="8"  stroke-linecap="round"/>
-        <line x1="195" y1="175" x2="375" y2="175"
+        <!-- E 마을로 (고오신사) -->
+        <line x1="288" y1="133" x2="352" y2="137"
+              stroke="#EDD9C8" stroke-width="6"  stroke-linecap="round"/>
+        <!-- S E-W (사라장·나카오쿠·신미술관) -->
+        <line x1="215" y1="177" x2="352" y2="182"
               stroke="#EDD9C8" stroke-width="7"  stroke-linecap="round"/>
-        <line x1="200" y1="195" x2="299" y2="195"
-              stroke="#EDD9C8" stroke-width="6"  stroke-linecap="round"/>
-        <line x1="237" y1="214" x2="268" y2="214"
-              stroke="#EDD9C8" stroke-width="6"  stroke-linecap="round"/>
+        <!-- Route 256 (해안로) -->
+        <path d="M 385 85 C 382 120 375 155 366 185 C 360 208 358 232 360 255"
+              stroke="#EDD9C8" stroke-width="8"  stroke-linecap="round" fill="none"/>
 
         <!-- 내륙 장식 (서쪽) -->
         <text x="38"  y="68"  font-size="16" opacity="0.28">🌿</text>
         <text x="42"  y="178" font-size="13" opacity="0.22">🌿</text>
         <text x="35"  y="245" font-size="12" opacity="0.20">🌿</text>
 
-        <!-- ══ 이에프로젝트 家 — 보라 소형 (r=7) ══
-             이시바시:  133.9950, 34.4622 → cx=236 cy=81
-             고카이쇼:  133.9969, 34.4606 → cx=296 cy=122
-             가도야:    133.9975, 34.4602 → cx=315 cy=132
-             하이샤:    133.9945, 34.4599 → cx=220 cy=140
-             고오신사:  133.9985, 34.4597 → cx=346 cy=145
-             미나미데라:133.9970, 34.4589 → cx=299 cy=166
-             긴자:      133.9958, 34.4570 → cx=261 cy=214
+        <!-- ══ 이에프로젝트 家 — 보라 소형 (r=5) ══
+             x = 20 + (lon - 133.989) × 33333
+             y = 20 + (34.465 - lat) × 21818
+             이시바시:   133.9951, 34.4622 → cx=223 cy=81
+             고카이쇼:   133.9969, 34.4606 → cx=283 cy=116
+             가도야:     133.9975, 34.4602 → cx=303 cy=125
+             하이샤:     133.9945, 34.4599 → cx=202 cy=131
+             고오신사:   133.9985, 34.4597 → cx=337 cy=136
+             미나미데라: 133.9970, 34.4589 → cx=287 cy=153
+             긴자:       133.9957, 34.4598 → cx=243 (왜곡→cx=240 cy=137)
         -->
 
-        <!-- 이시바시 (236, 81) -->
-        <circle cx="236" cy="81" r="7" fill="#9B7BBE"/>
-        <text x="236" y="85" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="228" y="76" text-anchor="end" font-size="7" fill="#7B5BA0">이시바시</text>
+        <!-- 이시바시 -->
+        <circle cx="223" cy="81" r="5" fill="#9B7BBE"/>
+        <text x="223" y="85" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="214" y="78" text-anchor="end" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">이시바시</text>
 
-        <!-- 고카이쇼 (296, 122) -->
-        <circle cx="296" cy="122" r="7" fill="#9B7BBE"/>
-        <text x="296" y="126" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="288" y="118" text-anchor="end" font-size="7" fill="#7B5BA0">고카이쇼</text>
+        <!-- 고카이쇼 -->
+        <circle cx="283" cy="116" r="5" fill="#9B7BBE"/>
+        <text x="283" y="120" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="283" y="108" text-anchor="middle" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">고카이쇼</text>
 
-        <!-- 가도야 (315, 132) -->
-        <circle cx="315" cy="132" r="7" fill="#9B7BBE"/>
-        <text x="315" y="136" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="323" y="128" text-anchor="start" font-size="7" fill="#7B5BA0">가도야</text>
+        <!-- 가도야 -->
+        <circle cx="303" cy="125" r="5" fill="#9B7BBE"/>
+        <text x="303" y="129" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="311" y="122" text-anchor="start" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">가도야</text>
 
-        <!-- 하이샤 (220, 140) -->
-        <circle cx="220" cy="140" r="7" fill="#9B7BBE"/>
-        <text x="220" y="144" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="212" y="136" text-anchor="end" font-size="7" fill="#7B5BA0">하이샤</text>
+        <!-- 하이샤 -->
+        <circle cx="202" cy="131" r="5" fill="#9B7BBE"/>
+        <text x="202" y="135" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="194" y="128" text-anchor="end" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">하이샤</text>
 
-        <!-- 고오신사 (346, 145) -->
-        <circle cx="346" cy="145" r="7" fill="#9B7BBE"/>
-        <text x="346" y="149" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="354" y="141" text-anchor="start" font-size="7" fill="#7B5BA0">고오신사</text>
+        <!-- 고오신사 -->
+        <circle cx="337" cy="136" r="5" fill="#9B7BBE"/>
+        <text x="337" y="140" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="345" y="133" text-anchor="start" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">고오신사</text>
 
-        <!-- 미나미데라 (299, 166) -->
-        <circle cx="299" cy="166" r="7" fill="#9B7BBE"/>
-        <text x="299" y="170" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="291" y="162" text-anchor="end" font-size="7" fill="#7B5BA0">미나미데라</text>
+        <!-- 미나미데라 -->
+        <circle cx="287" cy="153" r="5" fill="#9B7BBE"/>
+        <text x="287" y="157" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="287" y="163" text-anchor="middle" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">미나미데라</text>
 
-        <!-- 긴자 (261, 214) -->
-        <circle cx="261" cy="214" r="7" fill="#9B7BBE"/>
-        <text x="261" y="218" text-anchor="middle" font-size="7" fill="white" font-weight="700">家</text>
-        <text x="261" y="230" text-anchor="middle" font-size="7" fill="#7B5BA0">긴자</text>
+        <!-- 긴자 (왜곡: 실좌표 243,133 → 240,137) -->
+        <circle cx="240" cy="137" r="5" fill="#9B7BBE"/>
+        <text x="240" y="141" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
+        <text x="232" y="147" text-anchor="end" font-size="7" fill="#7B5BA0"
+              stroke="white" stroke-width="2.5" paint-order="stroke">긴자</text>
 
         <!-- ══ 랜드마크 — 파란 ══
-             안도뮤지엄: 133.9970, 34.4594 → cx=299 cy=153
+             혼무라라운지: 133.9972, 34.4610 → cx=293 cy=107
+             안도뮤지엄:  133.9966, 34.4595 → cx=273 (왜곡→cx=305 cy=145, 도로 동편)
+             신미술관:    133.9985, 34.4574 → cx=337 cy=186
         -->
 
-        <!-- 안도뮤지엄 (299, 153) r=10 -->
-        <circle cx="299" cy="153" r="10" fill="#4A65BF" filter="url(#ps)"/>
-        <text x="299" y="157" text-anchor="middle" font-size="9" fill="white">🏛</text>
-        <text x="310" y="150" text-anchor="start" font-size="7" fill="#2A4599" font-weight="700">안도뮤지엄</text>
+        <!-- 혼무라라운지 (r=7) -->
+        <circle cx="293" cy="107" r="7" fill="#4A65BF" filter="url(#ps)"/>
+        <text x="293" y="111" text-anchor="middle" font-size="7" fill="white">🏠</text>
+        <text x="283" y="97" text-anchor="end" font-size="7" fill="#2A4599" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">라운지</text>
 
-        <!-- ══ 식당 — 코랄 (구글맵 실좌표) ══
-             콘니치와:   133.997859, 34.4612745 → cx=326 cy=105
-             루크스피자: 133.998473, 34.4611355 → cx=345 cy=109
-             토시:       133.991966, 34.460328  → cx=140 cy=129
-             APRON CAFE: 133.996917, 34.4600252 → cx=296 cy=137
-             사라장:     133.996665, 34.4585354 → cx=288 cy=175
-             나카오쿠:   133.995235, 34.4577599 → cx=243 cy=195
+        <!-- 안도뮤지엄 (r=9, 왜곡: 도로 동편으로 이동) -->
+        <circle cx="305" cy="145" r="9" fill="#4A65BF" filter="url(#ps)"/>
+        <text x="305" y="149" text-anchor="middle" font-size="8" fill="white">🏛</text>
+        <text x="317" y="142" text-anchor="start" font-size="7" fill="#2A4599" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">안도뮤지엄</text>
+
+        <!-- 신미술관 (r=7) -->
+        <circle cx="337" cy="186" r="7" fill="#4A65BF" filter="url(#ps)"/>
+        <text x="337" y="190" text-anchor="middle" font-size="7" fill="white">🖼</text>
+        <text x="347" y="183" text-anchor="start" font-size="7" fill="#2A4599" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">신미술관</text>
+
+        <!-- ══ 식당 — 코랄 ══
+             x = 20 + (lon - 133.989) × 33333
+             y = 20 + (34.465 - lat) × 21818
+             콘니치와:   133.9979, 34.4613 → cx=317 cy=101
+             루크스:     133.9985, 34.4611 → cx=337 cy=105
+             토시:       133.9920, 34.4603 → cx=120 cy=123
+             에이프런:   133.9969, 34.4600 → cx=283 (왜곡→cx=260 cy=132, 도로 서편)
+             사라장:     133.9967, 34.4578 → cx=277 cy=177
+             나카오쿠:   133.9952, 34.4578 → cx=227 cy=177
         -->
 
-        <!-- 콘니치와 (326, 105) -->
-        <circle cx="326" cy="105" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="326" y="109" text-anchor="middle" font-size="10" fill="white">🍛</text>
-        <text x="315" y="91"  text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700">콘니치와</text>
+        <!-- 콘니치와 -->
+        <circle cx="317" cy="101" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="317" y="105" text-anchor="middle" font-size="9" fill="white">🍛</text>
+        <text x="317" y="82" text-anchor="middle" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">콘니치와</text>
 
-        <!-- 루크스피자 (345, 109) -->
-        <circle cx="345" cy="109" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="345" y="113" text-anchor="middle" font-size="10" fill="white">🍕</text>
-        <text x="358" y="107" text-anchor="start" font-size="7.5" fill="#B84020" font-weight="700">루크스</text>
+        <!-- 루크스 -->
+        <circle cx="337" cy="105" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="337" y="109" text-anchor="middle" font-size="9" fill="white">🍕</text>
+        <text x="351" y="101" text-anchor="start" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">루크스</text>
 
-        <!-- 창작요리 토시 (140, 129) -->
-        <circle cx="140" cy="129" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="140" y="133" text-anchor="middle" font-size="10" fill="white">🍱</text>
-        <text x="140" y="148" text-anchor="middle" font-size="7.5" fill="#B84020" font-weight="700">토시</text>
+        <!-- 창작요리 토시 -->
+        <circle cx="120" cy="123" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="120" y="127" text-anchor="middle" font-size="9" fill="white">🍱</text>
+        <text x="120" y="143" text-anchor="middle" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">토시</text>
 
-        <!-- APRON CAFE (296, 137) -->
-        <circle cx="296" cy="137" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="296" y="141" text-anchor="middle" font-size="10" fill="white">🍽</text>
-        <text x="283" y="133" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700">에이프런</text>
+        <!-- 에이프런 (왜곡: 도로 서편 cx=260) -->
+        <circle cx="260" cy="132" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="260" y="136" text-anchor="middle" font-size="9" fill="white">🍽</text>
+        <text x="247" y="118" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">에이프런</text>
 
-        <!-- 사라장 (288, 175) -->
-        <circle cx="288" cy="175" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="288" y="179" text-anchor="middle" font-size="10" fill="white">🥞</text>
-        <text x="275" y="171" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700">사라장</text>
+        <!-- 사라장 -->
+        <circle cx="277" cy="177" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="277" y="181" text-anchor="middle" font-size="9" fill="white">🥞</text>
+        <text x="291" y="174" text-anchor="start" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">사라장</text>
 
-        <!-- 나카오쿠 (243, 195) -->
-        <circle cx="243" cy="195" r="12" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="243" y="199" text-anchor="middle" font-size="10" fill="white">🍳</text>
-        <text x="230" y="191" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700">나카오쿠</text>
+        <!-- 나카오쿠 -->
+        <circle cx="227" cy="177" r="11" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="227" y="181" text-anchor="middle" font-size="9" fill="white">🍳</text>
+        <text x="213" y="174" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700"
+              stroke="white" stroke-width="2.5" paint-order="stroke">나카오쿠</text>
 
         <!-- ── 범례 ── -->
         <rect x="10" y="252" width="178" height="22" fill="rgba(255,255,255,0.92)" rx="6"/>
@@ -653,6 +691,7 @@
               <p class="card-section-label">✨ 포인트</p>
               <p class="card-reason">${h.highlight}</p>
             </div>
+            ${h.notice ? `<span class="notice-badge">${h.notice}</span>` : ''}
             <p class="artist-note">💎 ${h.artistNote}</p>
             <a class="btn-map btn-map-art"
                href="${safeUrl(h.mapUrl)}"
