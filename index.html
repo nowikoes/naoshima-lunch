@@ -223,6 +223,31 @@
       color: var(--color-subtext);
       font-size: 14px;
     }
+
+    /* ─── 지도 섹션 ──────────────────────────── */
+    .map-section {
+      padding: 16px 12px 4px;
+    }
+
+    .map-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-subtext);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .map-wrap {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .map-wrap svg text {
+      font-family: -apple-system, 'Noto Sans KR', BlinkMacSystemFont, sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -231,6 +256,150 @@
     <div class="header-brand">마이리얼트립 나오시마 워킹투어</div>
     <h1 class="header-title">오늘 점심은 이렇게 추천드려요 🍜</h1>
   </header>
+
+  <section class="map-section">
+    <p class="map-section-title">혼무라 일대 위치 안내</p>
+    <div class="map-wrap">
+      <svg viewBox="0 0 440 318" width="100%" xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="나오시마 혼무라 일대 지도">
+        <defs>
+          <filter id="ps">
+            <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+
+        <!-- 배경 -->
+        <rect width="440" height="318" fill="#FFF6EE"/>
+
+        <!-- 세토내해 (오른쪽) -->
+        <path d="M 375 0 Q 398 80 402 160 Q 406 240 390 318 L 440 318 L 440 0 Z"
+              fill="#D6EAF8" opacity="0.7"/>
+        <text x="420" y="120" font-size="8.5" fill="#8BBDD4" opacity="0.8"
+              writing-mode="vertical-rl" letter-spacing="2">세토내해</text>
+
+        <!-- 물결 -->
+        <text x="400" y="80"  font-size="10" fill="#9DC8E0" opacity="0.55">〰</text>
+        <text x="405" y="180" font-size="10" fill="#9DC8E0" opacity="0.5">〰</text>
+        <text x="400" y="268" font-size="10" fill="#9DC8E0" opacity="0.55">〰</text>
+
+        <!-- 방위 -->
+        <text x="16" y="22" font-size="10" fill="#C0A898" font-weight="700">N ↑</text>
+
+        <!-- ── 도로 ── -->
+        <!-- 중앙 남북도로 -->
+        <line x1="197" y1="18" x2="197" y2="300"
+              stroke="#EDD9C8" stroke-width="14" stroke-linecap="round"/>
+        <!-- 횡단로 북 -->
+        <line x1="110" y1="93" x2="370" y2="93"
+              stroke="#EDD9C8" stroke-width="11" stroke-linecap="round"/>
+        <!-- 횡단로 중 -->
+        <line x1="105" y1="155" x2="370" y2="155"
+              stroke="#EDD9C8" stroke-width="11" stroke-linecap="round"/>
+        <!-- 횡단로 남 -->
+        <line x1="105" y1="220" x2="362" y2="220"
+              stroke="#EDD9C8" stroke-width="11" stroke-linecap="round"/>
+        <!-- 동쪽 세로골목 -->
+        <line x1="272" y1="64" x2="272" y2="268"
+              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round"/>
+        <!-- 서쪽 골목 -->
+        <line x1="138" y1="93" x2="138" y2="220"
+              stroke="#EDD9C8" stroke-width="7" stroke-linecap="round"/>
+
+        <!-- 자연 장식 -->
+        <text x="50" y="62"  font-size="18" opacity="0.28">🌿</text>
+        <text x="55" y="275" font-size="15" opacity="0.22">🌿</text>
+        <text x="42" y="178" font-size="14" opacity="0.2">🌿</text>
+
+        <!-- ══════════════════════════════════════════
+             ART LANDMARKS (파란-보라 계열)
+             ══════════════════════════════════════════ -->
+
+        <!-- 나오시마 신미술관 -->
+        <circle cx="272" cy="70" r="18" fill="#6055C0" filter="url(#ps)"/>
+        <text x="272" y="75" text-anchor="middle" font-size="12" fill="white">🖼</text>
+        <text x="272" y="96" text-anchor="middle" font-size="8" fill="#4035A0" font-weight="700">나오시마신미술관</text>
+
+        <!-- 안도뮤지엄 -->
+        <circle cx="197" cy="120" r="18" fill="#4A65BF" filter="url(#ps)"/>
+        <text x="197" y="125" text-anchor="middle" font-size="12" fill="white">🏛</text>
+        <text x="197" y="146" text-anchor="middle" font-size="8.5" fill="#2A4599" font-weight="700">안도뮤지엄</text>
+
+        <!-- 혼무라라운지 -->
+        <circle cx="197" cy="170" r="16" fill="#3A85BF" filter="url(#ps)"/>
+        <text x="197" y="175" text-anchor="middle" font-size="11" fill="white">🏠</text>
+        <text x="197" y="194" text-anchor="middle" font-size="8.5" fill="#1A65A0" font-weight="700">혼무라라운지</text>
+
+        <!-- ══════════════════════════════════════════
+             이에프로젝트 家 (보라, 소형)
+             ══════════════════════════════════════════ -->
+
+        <!-- 이시바시 -->
+        <circle cx="310" cy="120" r="12" fill="#9B7BBE"/>
+        <text x="310" y="124" text-anchor="middle" font-size="9" fill="white" font-weight="700">家</text>
+        <text x="310" y="140" text-anchor="middle" font-size="7.5" fill="#7B5BA0">이시바시</text>
+
+        <!-- 남데라 -->
+        <circle cx="130" cy="155" r="12" fill="#9B7BBE"/>
+        <text x="130" y="159" text-anchor="middle" font-size="9" fill="white" font-weight="700">家</text>
+        <text x="130" y="175" text-anchor="middle" font-size="7.5" fill="#7B5BA0">남데라</text>
+
+        <!-- 각도야 -->
+        <circle cx="148" cy="242" r="12" fill="#9B7BBE"/>
+        <text x="148" y="246" text-anchor="middle" font-size="9" fill="white" font-weight="700">家</text>
+        <text x="148" y="262" text-anchor="middle" font-size="7.5" fill="#7B5BA0">각도야</text>
+
+        <!-- 하이샤 -->
+        <circle cx="312" cy="193" r="12" fill="#9B7BBE"/>
+        <text x="312" y="197" text-anchor="middle" font-size="9" fill="white" font-weight="700">家</text>
+        <text x="312" y="213" text-anchor="middle" font-size="7.5" fill="#7B5BA0">하이샤</text>
+
+        <!-- ══════════════════════════════════════════
+             식당 (코랄)
+             ══════════════════════════════════════════ -->
+
+        <!-- 사라장 -->
+        <circle cx="145" cy="91" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="145" y="96" text-anchor="middle" font-size="11" fill="white">🥞</text>
+        <text x="145" y="113" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">사라장</text>
+
+        <!-- 나카오쿠 -->
+        <circle cx="235" cy="155" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="235" y="160" text-anchor="middle" font-size="11" fill="white">🍳</text>
+        <text x="235" y="177" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">나카오쿠</text>
+
+        <!-- 콘니치와 -->
+        <circle cx="165" cy="195" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="165" y="200" text-anchor="middle" font-size="11" fill="white">🍛</text>
+        <text x="165" y="217" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">콘니치와</text>
+
+        <!-- 루크스 피자 -->
+        <circle cx="342" cy="155" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="342" y="160" text-anchor="middle" font-size="11" fill="white">🍕</text>
+        <text x="342" y="177" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">루크스피자</text>
+
+        <!-- 창작요리 토시 -->
+        <circle cx="272" cy="244" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="272" y="249" text-anchor="middle" font-size="11" fill="white">🍱</text>
+        <text x="272" y="266" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">창작요리 토시</text>
+
+        <!-- APRON CAFE -->
+        <circle cx="217" cy="274" r="14" fill="#FF8F73" filter="url(#ps)"/>
+        <text x="217" y="279" text-anchor="middle" font-size="11" fill="white">🍽</text>
+        <text x="217" y="296" text-anchor="middle" font-size="8" fill="#B84020" font-weight="700">에이프런카페</text>
+
+        <!-- ── 범례 ── -->
+        <rect x="10" y="272" width="112" height="40" fill="rgba(255,255,255,0.92)" rx="7"/>
+        <circle cx="22" cy="284" r="5" fill="#4A65BF"/>
+        <text x="31" y="288" font-size="8" fill="#444">미술관 · 거점</text>
+        <circle cx="22" cy="300" r="5" fill="#9B7BBE"/>
+        <text x="31" y="304" font-size="8" fill="#444">이에프로젝트 家</text>
+
+        <rect x="128" y="272" width="72" height="23" fill="rgba(255,255,255,0.92)" rx="7"/>
+        <circle cx="140" cy="284" r="5" fill="#FF8F73"/>
+        <text x="149" y="288" font-size="8" fill="#444">점심 식당</text>
+      </svg>
+    </div>
+  </section>
 
   <main id="restaurant-list" class="restaurant-list">
     <p class="loading">식당 정보 불러오는 중...</p>
