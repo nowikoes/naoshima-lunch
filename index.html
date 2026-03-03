@@ -606,12 +606,19 @@
 
     const TYPE_LABEL = { art: '이에프로젝트 家', landmark: '랜드마크', food: '식당' };
 
-    /* ── 지도 초기화 ── */
+    /* ── 지도 초기화: 전체 마커가 들어오는 bounds 자동 계산 ── */
+    const lngs = MAP_PLACES.map(p => p.coord[0]);
+    const lats = MAP_PLACES.map(p => p.coord[1]);
+    const bounds = [
+      [Math.min(...lngs) - 0.002, Math.min(...lats) - 0.001],
+      [Math.max(...lngs) + 0.002, Math.max(...lats) + 0.001],
+    ];
+
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v11',
-      center: [133.9962, 34.4599],
-      zoom: 15.5,
+      bounds,
+      fitBoundsOptions: { padding: 40 },
       attributionControl: false,
     });
 
