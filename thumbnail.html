@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200">
+  <title>OGP 썸네일 — 나오시마 점심 추천</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      font-family: -apple-system, 'Noto Sans KR', BlinkMacSystemFont, sans-serif;
+      background: #FF8F73;
+    }
+
+    .card {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(135deg, #FF8F73 0%, #E8673D 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 72px;
+      padding: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 배경 파도 장식 */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -60px;
+      width: 320px; height: 320px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    /* 왼쪽: 미니 맵 */
+    .map-box {
+      flex-shrink: 0;
+      width: 320px;
+      height: 420px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 오른쪽: 텍스트 */
+    .text-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 100px;
+      letter-spacing: 0.3px;
+      width: fit-content;
+    }
+
+    .title {
+      font-size: 76px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      font-size: 30px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .chips {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .chip {
+      background: rgba(255,255,255,0.22);
+      color: white;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      font-size: 18px;
+      color: rgba(255,255,255,0.65);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <!-- 왼쪽: 미니 SVG 지도 -->
+  <div class="map-box">
+    <svg viewBox="0 0 200 280" width="200" height="280" xmlns="http://www.w3.org/2000/svg">
+      <!-- 배경 -->
+      <rect width="200" height="280" fill="#FFF6EE" rx="12"/>
+      <!-- 세토내해 -->
+      <path d="M 168 0 Q 172 70 175 140 Q 178 210 170 280 L 200 280 L 200 0 Z"
+            fill="#D6EAF8" opacity="0.8"/>
+      <!-- 도로 -->
+      <line x1="120" y1="20" x2="120" y2="260" stroke="#EDD9C8" stroke-width="8" stroke-linecap="round"/>
+      <line x1="40" y1="70" x2="170" y2="70" stroke="#EDD9C8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="40" y1="110" x2="170" y2="110" stroke="#EDD9C8" stroke-width="6" stroke-linecap="round"/>
+      <line x1="60" y1="155" x2="170" y2="155" stroke="#EDD9C8" stroke-width="5" stroke-linecap="round"/>
+      <line x1="30" y1="110" x2="120" y2="110" stroke="#EDD9C8" stroke-width="5" stroke-linecap="round"/>
+      <!-- 식당 마커 -->
+      <circle cx="133" cy="52" r="11" fill="#FF8F73"/>
+      <text x="133" y="57" text-anchor="middle" font-size="10" fill="white">🍜</text>
+      <circle cx="152" cy="62" r="11" fill="#FF8F73"/>
+      <text x="152" y="67" text-anchor="middle" font-size="10" fill="white">🍕</text>
+      <circle cx="120" cy="88" r="10" fill="#FF8F73"/>
+      <text x="120" y="93" text-anchor="middle" font-size="9" fill="white">🍽</text>
+      <circle cx="40" cy="92" r="10" fill="#FF8F73"/>
+      <text x="40" y="97" text-anchor="middle" font-size="9" fill="white">🍱</text>
+      <circle cx="113" cy="128" r="10" fill="#FF8F73"/>
+      <text x="113" y="133" text-anchor="middle" font-size="9" fill="white">🥞</text>
+      <circle cx="86" cy="145" r="10" fill="#FF8F73"/>
+      <text x="86" y="150" text-anchor="middle" font-size="9" fill="white">🍳</text>
+      <!-- 방위 -->
+      <text x="14" y="24" font-size="11" fill="#C0A898" font-weight="700">N ↑</text>
+    </svg>
+  </div>
+
+  <!-- 오른쪽: 텍스트 -->
+  <div class="text-box">
+    <span class="brand">마이리얼트립 나오시마 워킹투어</span>
+
+    <div class="title">오늘 점심<br>어디서<br>드세요? 🍜</div>
+
+    <div class="subtitle">
+      혼무라 추천 식당 6곳<br>이에프로젝트 家 안내
+    </div>
+
+    <div class="chips">
+      <span class="chip">🥞 사라장</span>
+      <span class="chip">🍱 창작요리 토시</span>
+      <span class="chip">🍕 루크스피자</span>
+    </div>
+
+    <p class="footer-note">직접 가보고 엄선한 점심 가이드</p>
+  </div>
+
+</div>
+
+<!-- 사용법 안내 (브라우저에서 1200×630 스크린샷 후 images/og-thumbnail.png로 저장) -->
+<script>
+  // 이 파일을 브라우저에서 열고 zoom을 100%로 맞춘 후,
+  // 전체 페이지 스크린샷(1200×630)을 찍어 images/og-thumbnail.png로 저장하세요.
+  console.info('📸 OGP 썸네일 디자인 파일입니다.');
+  console.info('브라우저 확대율 100%로 맞춘 뒤 스크린샷 → images/og-thumbnail.png 저장');
+</script>
+</body>
+</html>
