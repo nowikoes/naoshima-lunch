@@ -11,6 +11,9 @@
   <meta property="og:image" content="https://nowikoes.github.io/naoshima-lunch/images/og-thumbnail.png">
   <meta property="og:type" content="website">
 
+  <!-- Mapbox GL JS -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
+
   <style>
     /* ─── 전역 초기화 ─────────────────────────────── */
     *, *::before, *::after {
@@ -80,12 +83,57 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
-      line-height: 0;
     }
 
-    .map-wrap svg text {
-      font-family: -apple-system, 'Noto Sans KR', BlinkMacSystemFont, sans-serif;
+    /* ── Mapbox 지도 높이 ─────────────────────────── */
+    #map { height: 300px; }
+
+    /* ── 커스텀 마커 ──────────────────────────────── */
+    .map-pin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transform: translateX(-50%);
     }
+    .pin-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      transition: transform 0.15s;
+    }
+    .map-pin:hover .pin-dot { transform: scale(1.3); }
+    [data-type="art"]      .pin-dot { background: #9B7BBE; font-size: 8px; }
+    [data-type="landmark"] .pin-dot { background: #4A65BF; font-size: 11px; width: 24px; height: 24px; }
+    [data-type="food"]     .pin-dot { background: #FF8F73; font-size: 11px; width: 24px; height: 24px; }
+    .pin-label {
+      margin-top: 2px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #1A1A1A;
+      white-space: nowrap;
+      text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 4px #fff;
+      line-height: 1;
+    }
+
+    /* ── Mapbox 팝업 커스텀 ───────────────────────── */
+    .mapboxgl-popup-content {
+      padding: 8px 14px 10px;
+      border-radius: 10px;
+      font-family: -apple-system, 'Noto Sans KR', sans-serif;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      min-width: 80px;
+    }
+    .popup-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
+    .popup-type { font-size: 10px; color: #888; margin-top: 2px; }
+    .mapboxgl-popup-close-button { font-size: 16px; right: 6px; top: 4px; }
 
     /* ─── 탭 바 ──────────────────────────────── */
     .tab-bar {
@@ -363,236 +411,11 @@
     <h1 class="header-title">오늘 점심은 이렇게 추천드려요 🍜</h1>
   </header>
 
-  <!-- ─── 지도: 구글맵 실좌표 기반 ────────────────────
-       bounding box: lon 133.989→x=20  134.001→x=420
-                     lat 34.465→y=20   34.454→y=260
-       scale_lon = 400/0.012 = 33,333 px/deg
-       scale_lat = 240/0.011 = 21,818 px/deg
-       x = 20 + (lon - 133.989) × 33333
-       y = 20 + (34.465 - lat) × 21818
-       ───────────────────────────────────────────── -->
+  <!-- ─── 지도: Mapbox GL JS ─────────────────────── -->
   <section class="map-section">
     <p class="map-section-title">혼무라 일대 위치 안내</p>
     <div class="map-wrap">
-      <svg viewBox="0 0 440 280" width="100%" xmlns="http://www.w3.org/2000/svg"
-           role="img" aria-label="나오시마 혼무라 일대 지도">
-        <defs>
-          <filter id="ps">
-            <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-opacity="0.2"/>
-          </filter>
-        </defs>
-
-        <!-- 배경 -->
-        <rect width="440" height="280" fill="#FFF6EE"/>
-
-        <!-- 세토내해 — lon 134.000 → x=387 -->
-        <path d="M 392 0 C 388 50 383 108 375 148 C 368 185 372 235 378 280 L 440 280 L 440 0 Z"
-              fill="#D6EAF8" opacity="0.75"/>
-        <text x="415" y="90" font-size="8" fill="#8BBDD4" opacity="0.8"
-              writing-mode="vertical-rl" letter-spacing="2">세토내해</text>
-        <text x="400" y="50"  font-size="9" fill="#9DC8E0" opacity="0.6">〰</text>
-        <text x="398" y="155" font-size="9" fill="#9DC8E0" opacity="0.5">〰</text>
-        <text x="400" y="245" font-size="9" fill="#9DC8E0" opacity="0.55">〰</text>
-
-        <!-- 방위 -->
-        <text x="16" y="22" font-size="10" fill="#C0A898" font-weight="700">N ↑</text>
-
-        <!-- ── 도로망 (OpenStreetMap 실측 데이터) ──
-             x = 20 + (lon - 133.989) × 33333
-             y = 20 + (34.465 - lat) × 21818
-             출처: Overpass API, 혼무라 지구 bbox 34.454,133.989,34.466,134.001
-        -->
-        <!-- secondary 北風戸積浦線 (sw=9) -->
-        <path d="M 26.1 116.0 L 29.9 114.6 L 39.5 112.5 L 42.2 111.7 L 45.0 110.6 L 46.9 109.5 L 62.4 99.4 L 63.0 99.1 L 66.7 96.5 L 68.2 95.1 L 69.2 93.9 L 74.0 85.2 L 75.0 83.6"
-              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 22.3 116.3 L 23.4 116.3 L 26.1 116.0 L 28.7 116.1 L 31.6 116.4 L 87.2 126.7 L 96.3 128.3 L 130.0 134.3 L 133.7 135.0 L 138.6 136.0 L 142.1 136.4 L 145.2 136.3 L 186.3 133.3 L 189.6 133.1 L 193.1 133.0 L 195.1 133.1 L 213.2 133.5 L 215.2 133.5 L 216.8 133.2 L 224.6 130.7 L 227.5 129.9"
-              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 348.5 158.8 L 351.8 161.5 L 355.2 163.9 L 366.1 170.5 L 369.8 172.3 L 374.2 174.2 L 382.7 177.0 L 385.8 178.3 L 387.8 179.5 L 390.0 181.3 L 390.9 183.3 L 391.5 185.0 L 391.7 187.2 L 391.8 189.6 L 391.0 192.5 L 390.0 194.4 L 388.6 196.3 L 386.5 198.3 L 383.9 199.8 L 375.6 203.7 L 372.3 205.3 L 369.6 207.1 L 367.3 209.1 L 365.5 211.2 L 364.5 213.1 L 363.8 214.7 L 361.5 221.4 L 358.6 228.0 L 357.8 230.7 L 357.6 232.4 L 358.2 235.3 L 359.3 238.0 L 361.5 241.3 L 363.3 244.2 L 365.3 246.4 L 367.8 248.6 L 377.2 254.8 L 380.0 257.0 L 381.8 258.9"
-              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 348.5 158.8 L 346.0 159.3 L 345.5 159.5 L 331.9 160.7 L 321.5 161.8 L 317.2 162.5 L 308.2 164.0 L 303.9 164.8 L 300.5 165.2 L 297.5 165.3 L 293.9 165.2 L 290.2 164.8 L 286.0 164.2 L 276.9 162.9 L 274.8 162.7 L 272.7 162.5 L 270.7 162.5 L 250.0 162.0 L 247.8 161.7 L 246.0 161.0 L 244.6 160.2 L 243.6 158.5 L 241.4 153.3 L 240.1 150.4 L 239.2 148.6 L 237.5 145.8 L 229.2 131.9 L 227.5 129.9"
-              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 75.0 83.6 L 76.1 81.9 L 77.3 80.0 L 78.8 76.2 L 79.6 69.7 L 80.3 67.5 L 81.4 65.3 L 96.1 45.1 L 97.2 43.1 L 98.1 41.1 L 98.7 38.8 L 98.9 36.4 L 98.4 30.0 L 98.5 27.5 L 99.0 25.2 L 99.9 22.6"
-              stroke="#EDD9C8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- tertiary 해안로 (sw=7) -->
-        <path d="M 348.5 158.8 L 346.0 154.2 L 344.4 147.3 L 344.2 145.4 L 344.5 144.1 L 345.5 142.6 L 349.9 138.3 L 351.0 136.6 L 351.5 135.1 L 351.3 133.5 L 346.8 127.0 L 345.9 124.8 L 345.4 122.5 L 344.4 110.0 L 344.5 108.8 L 344.5 107.5 L 344.7 103.6 L 344.0 102.7 L 340.9 101.4 L 339.3 100.9"
-              stroke="#EDD9C8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 325.2 96.0 L 328.4 96.5 L 339.3 100.9"
-              stroke="#EDD9C8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- unclassified 항구접근로·마을길 (sw=6) -->
-        <path d="M 227.5 129.9 L 229.9 128.8 L 238.6 124.3 L 244.4 120.7 L 249.4 118.0 L 250.7 117.5 L 252.0 117.1 L 253.5 117.3 L 258.0 117.7 L 267.2 117.5 L 270.3 117.3 L 271.1 117.2 L 273.4 117.0 L 283.7 114.7 L 291.1 113.2 L 295.0 112.3 L 305.6 110.7 L 311.3 109.7 L 319.2 108.7 L 323.8 107.9 L 327.6 106.7 L 330.6 105.5 L 333.8 104.1 L 334.0 103.9 L 337.2 101.9 L 339.3 100.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 80.4 259.5 L 89.9 252.0 L 90.4 247.7 L 89.0 245.1 L 87.5 242.4 L 89.4 235.7 L 89.5 229.0 L 90.7 223.8 L 91.3 222.1 L 88.4 217.0 L 88.4 215.5 L 89.0 213.7 L 95.0 209.8 L 95.7 208.6 L 95.6 207.4 L 89.6 205.1 L 87.2 203.6 L 85.6 202.5 L 86.0 201.2 L 89.4 199.0 L 101.7 193.1 L 107.9 189.5 L 108.8 185.4 L 104.7 180.3 L 99.0 176.3 L 90.1 172.1 L 81.5 166.8 L 74.7 160.1 L 74.7 153.9 L 77.3 151.5 L 86.0 146.4 L 93.6 144.0 L 101.3 142.3 L 113.7 140.0 L 123.3 138.2 L 129.4 136.3 L 133.7 135.0 L 139.5 131.1 L 142.2 127.2 L 143.8 124.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 272.7 162.5 L 272.9 153.9 L 273.0 151.4 L 273.0 149.6 L 272.3 147.0 L 271.3 145.7 L 270.7 145.1 L 266.9 142.2"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 285.9 99.7 L 294.3 110.3 L 295.0 112.3 L 295.5 114.2 L 293.7 126.2 L 293.4 132.2 L 292.9 138.3"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 293.7 126.2 L 304.8 125.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 333.8 139.9 L 332.2 139.8 L 330.1 139.5 L 327.7 138.6 L 325.9 137.4 L 324.6 136.0 L 323.6 134.6 L 322.5 133.3 L 321.7 131.9 L 321.5 130.2 L 321.9 127.8 L 321.1 126.5 L 319.3 126.1 L 304.8 125.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 148.8 95.3 L 81.6 85.6"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 143.8 124.9 L 152.4 111.5 L 152.6 109.0 L 154.1 104.6 L 154.0 102.6 L 153.4 100.9 L 151.4 95.7"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 259.9 126.9 L 261.3 132.9 L 266.9 142.2"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 266.9 142.2 L 258.7 143.4 L 257.6 142.7 L 249.3 133.2 L 245.2 128.2 L 238.6 124.3"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 258.0 117.7 L 258.5 120.7 L 258.9 123.7 L 259.9 126.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 305.6 110.7 L 306.0 112.2 L 305.9 116.1 L 305.7 121.2 L 304.8 125.9"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 81.6 85.6 L 79.5 85.6 L 76.8 85.5 L 74.0 85.2"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 69.5 77.0 L 72.6 83.7 L 74.0 85.2"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 39.0 59.6 L 29.4 51.8 L 30.6 49.8 L 42.8 44.7 L 43.8 43.6 L 44.2 43.0 L 45.0 41.2 L 44.4 36.9 L 44.0 35.6 L 40.0 31.2 L 34.7 24.9 L 30.1 19.3 L 27.3 17.1 L 25.2 16.5 L 20.3 17.3"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 39.0 59.6 L 41.2 61.2 L 49.9 68.4 L 51.2 69.1 L 53.9 69.1 L 59.2 69.1 L 62.8 69.7 L 65.0 71.1 L 66.3 72.1 L 68.1 74.6 L 69.5 77.0"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 213.9 49.7 L 214.7 52.3 L 214.9 54.4 L 214.5 56.0 L 213.3 57.7 L 213.3 58.7 L 215.3 60.9 L 230.9 74.2 L 234.5 76.9 L 237.0 78.2 L 243.3 81.7 L 269.7 103.2"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 259.5 105.2 L 269.7 103.2 L 285.9 99.7 L 293.9 97.8 L 297.1 101.5 L 300.4 100.7 L 302.7 101.1 L 305.3 100.4 L 316.8 97.2 L 318.6 96.7 L 325.2 96.0"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 90.4 247.7 L 112.0 247.3 L 116.6 245.5 L 126.3 239.5 L 130.6 239.4 L 137.3 245.2 L 141.8 244.6 L 165.6 236.4 L 171.9 232.4 L 173.8 227.6 L 180.8 224.7 L 189.2 223.1 L 197.8 220.1 L 203.7 215.6 L 211.4 212.2 L 233.2 202.9 L 236.6 198.3 L 235.9 193.8 L 234.8 190.3 L 237.5 187.7 L 246.9 180.6 L 250.6 176.5 L 255.9 172.5 L 261.8 170.8 L 269.4 169.3"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 293.8 236.7 L 285.0 233.8 L 275.9 228.8 L 273.8 225.9 L 273.7 222.9 L 274.8 220.0 L 274.5 215.8 L 272.4 209.8 L 271.2 206.1 L 269.6 203.2 L 269.1 200.4 L 268.0 197.2 L 267.3 194.2 L 267.0 188.8 L 266.9 183.3 L 267.3 176.9 L 268.2 172.2 L 268.8 170.4 L 269.4 169.3"
-              stroke="#EDD9C8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- residential 마을 소로 (sw=5) -->
-        <path d="M 20.5 140.5 L 30.0 138.0 L 38.8 136.5 L 45.4 137.0 L 48.4 136.8 L 54.7 136.0 L 61.9 135.0 L 65.5 134.7 L 71.9 133.5 L 95.2 129.6 L 96.3 128.3"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 151.4 95.7 L 154.2 95.5 L 155.8 95.0 L 158.7 91.5 L 170.6 84.6 L 163.9 75.1 L 164.2 73.5 L 178.7 60.3 L 180.3 57.9 L 176.9 46.9 L 175.3 43.8 L 180.7 43.0 L 185.4 42.4 L 193.2 41.8 L 203.7 47.2 L 208.1 50.1 L 206.7 57.4 L 205.4 66.4 L 206.2 70.8 L 208.2 73.0 L 224.2 82.9 L 250.3 98.2 L 259.5 105.2"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 292.9 138.3 L 291.3 141.0 L 287.0 146.0 L 283.3 150.4 L 280.0 157.6 L 276.9 162.9"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 270.7 145.1 L 275.4 144.4 L 280.1 144.6 L 283.5 145.2 L 287.0 146.0"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 142.2 127.2 L 171.7 128.4 L 182.0 129.6"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 363.8 214.7 L 359.9 214.8 L 354.5 222.2 L 341.2 229.5 L 335.4 232.5 L 318.5 235.0 L 308.6 239.2 L 306.1 240.4"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 89.4 199.0 L 80.4 188.1 L 76.5 187.5 L 66.5 190.3 L 54.3 194.5"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <path d="M 267.3 176.9 L 299.8 171.0"
-              stroke="#EDD9C8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-        <!-- 내륙 장식 (서쪽) -->
-        <text x="38"  y="68"  font-size="16" opacity="0.28">🌿</text>
-        <text x="42"  y="178" font-size="13" opacity="0.22">🌿</text>
-        <text x="35"  y="245" font-size="12" opacity="0.20">🌿</text>
-
-        <!-- ══ 이에프로젝트 家 — 보라 소형 (r=5) ══ -->
-
-        <!-- 이시바시: 133.9951, 34.4622 → cx=223 cy=81 -->
-        <circle cx="223" cy="81" r="5" fill="#9B7BBE"/>
-        <text x="223" y="85" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="213" y="75" text-anchor="end" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">이시바시</text>
-
-        <!-- 고카이쇼: 133.9969, 34.4606 → cx=283 cy=116 -->
-        <circle cx="283" cy="116" r="5" fill="#9B7BBE"/>
-        <text x="283" y="120" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="272" y="109" text-anchor="end" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">고카이쇼</text>
-
-        <!-- 가도야: 133.9975, 34.4602 → cx=303 cy=125 -->
-        <circle cx="303" cy="125" r="5" fill="#9B7BBE"/>
-        <text x="303" y="129" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="311" y="122" text-anchor="start" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">가도야</text>
-
-        <!-- 하이샤: 133.9945, 34.4599 → cx=202 cy=131 -->
-        <circle cx="202" cy="131" r="5" fill="#9B7BBE"/>
-        <text x="202" y="135" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="193" y="128" text-anchor="end" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">하이샤</text>
-
-        <!-- 고오신사: 133.9985, 34.4597 → cx=337 cy=136 -->
-        <circle cx="337" cy="136" r="5" fill="#9B7BBE"/>
-        <text x="337" y="140" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="347" y="133" text-anchor="start" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">고오신사</text>
-
-        <!-- 미나미데라: 133.9970, 34.4589 → cx=287 cy=153 -->
-        <circle cx="287" cy="153" r="5" fill="#9B7BBE"/>
-        <text x="287" y="157" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="287" y="165" text-anchor="middle" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">미나미데라</text>
-
-        <!-- 긴자: 133.9957, 34.4598 → cx=243 cy=134 -->
-        <circle cx="243" cy="134" r="5" fill="#9B7BBE"/>
-        <text x="243" y="138" text-anchor="middle" font-size="6" fill="white" font-weight="700">家</text>
-        <text x="235" y="148" text-anchor="end" font-size="7" fill="#7B5BA0"
-              stroke="white" stroke-width="2.5" paint-order="stroke">긴자</text>
-
-        <!-- ══ 랜드마크 — 파란 (r=7) ══ -->
-
-        <!-- 혼무라라운지: 133.9972, 34.4610 → cx=293 cy=107 -->
-        <circle cx="293" cy="107" r="7" fill="#4A65BF" filter="url(#ps)"/>
-        <text x="293" y="111" text-anchor="middle" font-size="7" fill="white">🏠</text>
-        <text x="280" y="99" text-anchor="end" font-size="7" fill="#2A4599" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">라운지</text>
-
-        <!-- 안도뮤지엄: 133.9966, 34.4595 → cx=273 cy=140 -->
-        <circle cx="273" cy="140" r="7" fill="#4A65BF" filter="url(#ps)"/>
-        <text x="273" y="144" text-anchor="middle" font-size="7" fill="white">🏛</text>
-        <text x="262" y="137" text-anchor="end" font-size="7" fill="#2A4599" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">안도뮤지엄</text>
-
-        <!-- 신미술관: 133.9985, 34.4574 → cx=337 cy=186 -->
-        <circle cx="337" cy="186" r="7" fill="#4A65BF" filter="url(#ps)"/>
-        <text x="337" y="190" text-anchor="middle" font-size="7" fill="white">🖼</text>
-        <text x="347" y="183" text-anchor="start" font-size="7" fill="#2A4599" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">신미술관</text>
-
-        <!-- ══ 식당 — 코랄 (r=7, 크기 축소) ══ -->
-
-        <!-- 콘니치와: 133.9979, 34.4613 → cx=317 cy=101 -->
-        <circle cx="317" cy="101" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="317" y="105" text-anchor="middle" font-size="7" fill="white">🍛</text>
-        <text x="317" y="91" text-anchor="middle" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">콘니치와</text>
-
-        <!-- 루크스: 133.9985, 34.4611 → cx=337 cy=105 -->
-        <circle cx="337" cy="105" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="337" y="109" text-anchor="middle" font-size="7" fill="white">🍕</text>
-        <text x="348" y="101" text-anchor="start" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">루크스</text>
-
-        <!-- 창작요리 토시: 133.9920, 34.4603 → cx=120 cy=123 -->
-        <circle cx="120" cy="123" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="120" y="127" text-anchor="middle" font-size="7" fill="white">🍱</text>
-        <text x="120" y="140" text-anchor="middle" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">토시</text>
-
-        <!-- 에이프런: 133.9960, 34.4600 → cx=253 cy=129 -->
-        <circle cx="253" cy="129" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="253" y="133" text-anchor="middle" font-size="7" fill="white">🍽</text>
-        <text x="240" y="119" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">에이프런</text>
-
-        <!-- 사라장: 133.9967, 34.4578 → cx=277 cy=177 -->
-        <circle cx="277" cy="177" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="277" y="181" text-anchor="middle" font-size="7" fill="white">🥞</text>
-        <text x="265" y="177" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">사라장</text>
-
-        <!-- 나카오쿠: 133.9952, 34.4578 → cx=227 cy=177 -->
-        <circle cx="227" cy="177" r="7" fill="#FF8F73" filter="url(#ps)"/>
-        <text x="227" y="181" text-anchor="middle" font-size="7" fill="white">🍳</text>
-        <text x="213" y="174" text-anchor="end" font-size="7.5" fill="#B84020" font-weight="700"
-              stroke="white" stroke-width="2.5" paint-order="stroke">나카오쿠</text>
-
-        <!-- ── 범례 ── -->
-        <rect x="10" y="252" width="178" height="22" fill="rgba(255,255,255,0.92)" rx="6"/>
-        <circle cx="22" cy="263" r="5" fill="#4A65BF"/>
-        <text x="31" y="267" font-size="7" fill="#444">미술관</text>
-        <circle cx="68" cy="263" r="5" fill="#9B7BBE"/>
-        <text x="77" y="267" font-size="7" fill="#444">이에프로젝트 家</text>
-        <circle cx="149" cy="263" r="5" fill="#FF8F73"/>
-        <text x="158" y="267" font-size="7" fill="#444">식당</text>
-      </svg>
+      <div id="map"></div>
     </div>
   </section>
 
@@ -750,6 +573,88 @@
     }
 
     loadAll();
+  </script>
+
+  <!-- ── Mapbox GL JS ──────────────────────────────────────── -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+  <script>
+    /* ── 토큰: mapbox.com → Tokens 탭에서 복사 후 교체 ── */
+    mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+
+    /* ── 장소 데이터 ── */
+    const MAP_PLACES = [
+      // 이에프로젝트 家
+      { type: 'art',      emoji: '家', name: '이시바시',   coord: [133.9951, 34.4622] },
+      { type: 'art',      emoji: '家', name: '고카이쇼',   coord: [133.9969, 34.4606] },
+      { type: 'art',      emoji: '家', name: '가도야',     coord: [133.9975, 34.4602] },
+      { type: 'art',      emoji: '家', name: '하이샤',     coord: [133.9945, 34.4599] },
+      { type: 'art',      emoji: '家', name: '고오신사',   coord: [133.9985, 34.4597] },
+      { type: 'art',      emoji: '家', name: '미나미데라', coord: [133.9970, 34.4589] },
+      { type: 'art',      emoji: '家', name: '긴자',       coord: [133.9957, 34.4598] },
+      // 랜드마크
+      { type: 'landmark', emoji: '🏠', name: '혼무라라운지', coord: [133.9972, 34.4610] },
+      { type: 'landmark', emoji: '🏛', name: '안도뮤지엄',   coord: [133.9966, 34.4595] },
+      { type: 'landmark', emoji: '🖼', name: '신미술관',     coord: [133.9985, 34.4574] },
+      // 식당
+      { type: 'food', emoji: '🍛', name: '콘니치와', coord: [133.9979, 34.4613] },
+      { type: 'food', emoji: '🍕', name: '루크스',   coord: [133.9985, 34.4611] },
+      { type: 'food', emoji: '🍱', name: '토시',     coord: [133.9920, 34.4603] },
+      { type: 'food', emoji: '🍽', name: '에이프런', coord: [133.9960, 34.4600] },
+      { type: 'food', emoji: '🥞', name: '사라장',   coord: [133.9967, 34.4578] },
+      { type: 'food', emoji: '🍳', name: '나카오쿠', coord: [133.9952, 34.4578] },
+    ];
+
+    const TYPE_LABEL = { art: '이에프로젝트 家', landmark: '랜드마크', food: '식당' };
+
+    /* ── 지도 초기화 ── */
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [133.9962, 34.4599],
+      zoom: 15.5,
+      attributionControl: false,
+    });
+
+    map.addControl(new mapboxgl.AttributionControl({ compact: true }));
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
+
+    /* ── 로드 후: POI 레이블 숨김 ── */
+    map.on('style.load', () => {
+      ['poi-label', 'transit-label'].forEach(id => {
+        if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
+      });
+    });
+
+    /* ── 마커 생성 ── */
+    map.on('load', () => {
+      MAP_PLACES.forEach(place => {
+        const pin = document.createElement('div');
+        pin.className = 'map-pin';
+        pin.setAttribute('data-type', place.type);
+
+        const dot = document.createElement('div');
+        dot.className = 'pin-dot';
+        dot.textContent = place.emoji;
+
+        const label = document.createElement('div');
+        label.className = 'pin-label';
+        label.textContent = place.name;
+
+        pin.appendChild(dot);
+        pin.appendChild(label);
+
+        const popup = new mapboxgl.Popup({ offset: 20, closeButton: true, maxWidth: '180px' })
+          .setHTML(`
+            <div class="popup-name">${place.name}</div>
+            <div class="popup-type">${TYPE_LABEL[place.type]}</div>
+          `);
+
+        new mapboxgl.Marker({ element: pin, anchor: 'top' })
+          .setLngLat(place.coord)
+          .setPopup(popup)
+          .addTo(map);
+      });
+    });
   </script>
 
 </body>
