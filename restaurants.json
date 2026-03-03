@@ -1,0 +1,52 @@
+[
+  {
+    "name": "콘니치와",
+    "nameJp": "直島カフェコンニチハ",
+    "menu": "카레라이스, 도리아, 리조또 ",
+    "reason": "뷰 좋은 가정집 분위기. 브레이크타임 없이 종일 운영해서 애매한 점심 시간에 가기 딱이에요. 카레가 시그니처 메뉴.",
+    "image": "images/konnichiwa.jpg",
+    "mapUrl": "https://maps.app.goo.gl/8iKACqyDnVV3FSVm6"
+  },
+  {
+    "name": "창작요리 토시",
+    "nameJp": "創作料理 Toshi",
+    "menu": "계절 점심 정식 (음료 포함 ¥3,000)",
+    "reason": "나오시마 평점 4.9점. 제철 식재료로 만드는 정갈하고 정성스러운 정식.",
+    "image": "images/toshi.jpg",
+    "mapUrl": "https://maps.app.goo.gl/FKFqMw3xLyEzPSyC8",
+    "warningImage": "images/toshi-directions.jpg"
+  },
+  {
+    "name": "사라장",
+    "nameJp": "サラザン Sarrasin",
+    "menu": "갈레뜨, 크레페(후식), 음료 세트",
+    "reason": "나오시마에서 즐기는 프랑스식 갈레뜨. 미술관 관람 중간에 쉬어가기 좋은 조용한 분위기예요.",
+    "image": "images/sarrasin.jpg",
+    "mapUrl": "https://maps.app.goo.gl/miUiPQi17GcT3xZg7"
+  },
+  {
+    "name": "루크스 피자 & 그릴",
+    "nameJp": "ルークスピザ＆グリル",
+    "menu": "정통 이탈리아 화덕 피자, 파스타",
+    "reason": "나오시마에서 즐기는 이탈리안. 피자·파스타로 든든하게 먹고 싶을 때 딱이에요.",
+    "image": "images/lukes.jpg",
+    "mapUrl": "https://maps.app.goo.gl/8YoadjxyWHeeZvJV7"
+  },
+  {
+    "name": "카페 살롱 나카오쿠",
+    "nameJp": "カフェサロン中奥",
+    "menu": "토마토소스 오므라이스, 카레라이스",
+    "reason": "리뷰 594건, 4.5점. 나오시마 대표 오므라이스 맛집. 토마토소스가 상큼하고 독특해요.",
+    "image": "images/nakaoku.jpg",
+    "mapUrl": "https://maps.app.goo.gl/Aexxj1gVR1bXrN9F8"
+  },
+  {
+    "name": "APRON CAFE",
+    "nameJp": "アプロン カフェ",
+    "menu": "함박스테이크 정식",
+    "reason": "혼무라 마을 안에 있는 아늑한 가정식 카페 겸 레스토랑. 평점 4.6점(181건)",
+    "image": "images/apron.jpg",
+    "mapUrl": "https://maps.app.goo.gl/7RL6yFBmU3uxxFdP9",
+    "notice": "💴 현금만 가능"
+  }
+]
