@@ -289,6 +289,20 @@
       font-weight: 600;
     }
 
+    /* ─── 휴무일 배지 ────────────────────────────── */
+    .closed-days-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      padding: 4px 10px;
+      background: #F3F4F6;
+      color: #4B5563;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
     /* ─── 길찾기 주의 아코디언 ────────────────────── */
     .card-warning {
       margin-top: 12px;
@@ -482,6 +496,7 @@
             <h2 class="card-name">
               ${r.name}<span class="card-name-jp">${r.nameJp}</span>
             </h2>
+            ${r.closedDays ? `<span class="closed-days-badge">🗓 ${r.closedDays}</span>` : ''}
             ${r.notice ? `<span class="notice-badge">${r.notice}</span>` : ''}
             <div class="card-section">
               <p class="card-section-label">🍱 메뉴</p>

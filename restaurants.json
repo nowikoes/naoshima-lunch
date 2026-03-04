@@ -15,7 +15,8 @@
     "image": "images/toshi.jpg",
     "mapUrl": "https://maps.app.goo.gl/FKFqMw3xLyEzPSyC8",
     "warningImage": "images/toshi-directions.jpg",
-    "warningOpen": true
+    "warningOpen": true,
+    "closedDays": "수·목 정휴"
   },
   {
     "name": "사라장",
@@ -23,7 +24,8 @@
     "menu": "갈레뜨, 크레페(후식), 음료 세트",
     "reason": "나오시마에서 즐기는 프랑스식 갈레뜨. 미술관 관람 중간에 쉬어가기 좋은 조용한 분위기예요.",
     "image": "images/sarrasin.jpg",
-    "mapUrl": "https://maps.app.goo.gl/miUiPQi17GcT3xZg7"
+    "mapUrl": "https://maps.app.goo.gl/miUiPQi17GcT3xZg7",
+    "closedDays": "월요일 정휴"
   },
   {
     "name": "루크스 피자 & 그릴",
@@ -31,7 +33,8 @@
     "menu": "정통 이탈리아 화덕 피자, 파스타",
     "reason": "나오시마에서 즐기는 이탈리안. 피자·파스타로 든든하게 먹고 싶을 때 딱이에요.",
     "image": "images/lukes.jpg",
-    "mapUrl": "https://maps.app.goo.gl/8YoadjxyWHeeZvJV7"
+    "mapUrl": "https://maps.app.goo.gl/8YoadjxyWHeeZvJV7",
+    "closedDays": "월·화 정휴"
   },
   {
     "name": "카페 살롱 나카오쿠",
@@ -39,7 +42,8 @@
     "menu": "토마토소스 오므라이스, 카레라이스",
     "reason": "리뷰 594건, 4.5점. 나오시마 대표 오므라이스 맛집. 토마토소스가 상큼하고 독특해요.",
     "image": "images/nakaoku.jpg",
-    "mapUrl": "https://maps.app.goo.gl/Aexxj1gVR1bXrN9F8"
+    "mapUrl": "https://maps.app.goo.gl/Aexxj1gVR1bXrN9F8",
+    "closedDays": "월·화 정휴"
   },
   {
     "name": "APRON CAFE",
@@ -48,6 +52,7 @@
     "reason": "혼무라 마을 안에 있는 아늑한 가정식 카페 겸 레스토랑. 평점 4.6점(181건)",
     "image": "images/apron.jpg",
     "mapUrl": "https://maps.app.goo.gl/7RL6yFBmU3uxxFdP9",
-    "notice": "💴 현금만 가능"
+    "notice": "💴 현금만 가능",
+    "closedDays": "월요일 정휴"
   }
 ]
