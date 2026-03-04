@@ -3,8 +3,8 @@
    Reference: apple.com — Clean & Minimal
    ───────────────────────────────────────────── */
 
-/* ── Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+/* ── Pretendard (한글 시스템 폰트) */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 
 /* ── 디자인 토큰 */
 :root {
@@ -66,12 +66,12 @@
   --shadow-md: 0 4px 16px rgba(0,0,0,.09), 0 2px 6px rgba(0,0,0,.05);
 
   /* 타이포그래피 */
-  --font-display:  800 28px/1.2 'Inter','Noto Sans KR',sans-serif;
-  --font-title:    700 20px/1.3 'Inter','Noto Sans KR',sans-serif;
-  --font-heading:  700 16px/1.4 'Inter','Noto Sans KR',sans-serif;
-  --font-body:     400 15px/1.65 'Inter','Noto Sans KR',sans-serif;
-  --font-caption:  500 13px/1.6 'Inter','Noto Sans KR',sans-serif;
-  --font-micro:    600 11.5px/1.4 'Inter','Noto Sans KR',sans-serif;
+  --font-display:  800 28px/1.2 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --font-title:    700 20px/1.3 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --font-heading:  700 16px/1.4 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --font-body:     400 15px/1.65 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --font-caption:  500 13px/1.6 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+  --font-micro:    600 11.5px/1.4 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
 }
 
 /* ── 리셋 */

@@ -2,93 +2,181 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>나오시마 점심 추천 🍜 — 마이리얼트립 워킹투어</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0F172A">
+  <title>나오시마 점심 추천 — 마이리얼트립 워킹투어</title>
 
   <!-- 카카오톡 OGP 미리보기 -->
-  <meta property="og:title" content="나오시마 점심 추천 🍜">
+  <meta property="og:title" content="나오시마 점심 추천">
   <meta property="og:description" content="마이리얼트립 나오시마 워킹투어 점심 가이드 + 이에프로젝트 家 안내">
   <meta property="og:image" content="https://nowikoes.github.io/naoshima-lunch/images/og-thumbnail.png">
   <meta property="og:type" content="website">
+
+  <!-- Pretendard -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 
   <!-- Mapbox GL JS -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
 
   <style>
-    /* ─── 전역 초기화 ─────────────────────────────── */
+    /* ─────────────────────────────────────────────
+       PBrain Design System — 인라인 (standalone)
+       Reference: apple.com — Clean & Minimal
+       ───────────────────────────────────────────── */
+
+    /* ── 디자인 토큰 */
+    :root {
+      /* 텍스트 */
+      --color-text:          #18181B;
+      --color-text-sub:      #52525B;
+      --color-text-muted:    #A1A1AA;
+
+      /* 배경/서피스 */
+      --color-bg:            #FAFAFA;
+      --color-surface:       #FFFFFF;
+      --color-surface-raised:#F4F4F5;
+
+      /* 선 */
+      --color-border:        #E4E4E7;
+      --color-border-strong: #D4D4D8;
+
+      /* 포인트 — 단 1색 */
+      --color-accent:        #2563EB;
+      --color-accent-sub:    #3B82F6;
+      --color-accent-bg:     #EFF6FF;
+
+      /* 경고 */
+      --color-warn:          #D97706;
+      --color-warn-bg:       #FFFBEB;
+
+      /* 성공 */
+      --color-ok:            #16A34A;
+      --color-ok-bg:         #F0FDF4;
+      --color-ok-border:     #BBF7D0;
+
+      /* 오류 */
+      --color-error:         #DC2626;
+      --color-error-bg:      #FEF2F2;
+
+      /* 헤더 */
+      --color-header:        #0F172A;
+
+      /* 간격 */
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-5:  20px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      /* 형태 */
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   14px;
+      --radius-xl:   20px;
+      --radius-full: 9999px;
+
+      /* 그림자 */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:    0 2px 8px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.09), 0 2px 6px rgba(0,0,0,.05);
+
+      /* 타이포그래피 */
+      --font-display:  800 28px/1.2 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+      --font-title:    700 20px/1.3 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+      --font-heading:  700 16px/1.4 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+      --font-body:     400 15px/1.65 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+      --font-caption:  500 13px/1.6 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+      --font-micro:    600 11.5px/1.4 -apple-system,BlinkMacSystemFont,'Pretendard Variable',Pretendard,system-ui,sans-serif;
+
+      /* 기능적 색상 (지도 마커/탭용) */
+      --color-food: #FF8F73;
+      --color-art:  #6055C0;
+    }
+
+    /* ── 리셋 */
     *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    :root {
-      --color-coral: #FF8F73;
-      --color-coral-dark: #E8673D;
-      --color-art: #6055C0;
-      --color-art-dark: #4A3A8A;
-      --color-bg: #F5F5F5;
-      --color-card: #FFFFFF;
-      --color-text: #1A1A1A;
-      --color-subtext: #666666;
-      --radius: 12px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: -apple-system, 'Noto Sans KR', BlinkMacSystemFont, sans-serif;
-      background-color: var(--color-bg);
+      font: var(--font-body);
       color: var(--color-text);
-      max-width: 480px;
+      background: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── 레이아웃 */
+    .pb-wrap {
+      max-width: 520px;
       margin: 0 auto;
+      background: var(--color-surface);
       min-height: 100vh;
+      padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom));
     }
 
-    /* ─── 헤더 ───────────────────────────────────── */
-    .site-header {
-      background-color: var(--color-coral);
+    /* ── 헤더 */
+    .pb-header {
+      background: var(--color-header);
+      padding: calc(var(--space-8) + env(safe-area-inset-top)) var(--space-6) var(--space-6);
       color: white;
-      padding: 20px 16px 24px;
-      text-align: center;
+    }
+    .pb-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: var(--radius-full);
+      padding: 4px 12px;
+      font: var(--font-micro);
+      color: rgba(255,255,255,.8);
+      margin-bottom: var(--space-4);
+      letter-spacing: 0.01em;
+    }
+    .pb-header h1 {
+      font: var(--font-display);
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-2);
     }
 
-    .header-brand {
-      font-size: 12px;
-      opacity: 0.85;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
+    /* ── 섹션 */
+    .pb-section {
+      padding: var(--space-6) var(--space-5) 0;
+    }
+    .pb-section + .pb-section {
+      padding-top: var(--space-5);
+    }
+    .pb-section-title {
+      font: var(--font-heading);
+      color: var(--color-text);
+      letter-spacing: -0.015em;
+      margin-bottom: var(--space-3);
     }
 
-    .header-title {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    /* ─── 지도 섹션 ──────────────────────────── */
-    .map-section {
-      padding: 16px 12px 4px;
-    }
-
-    .map-section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--color-subtext);
-      margin-bottom: 8px;
-      letter-spacing: 0.3px;
-    }
-
-    .map-wrap {
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    /* ── 카드 */
+    .pb-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-3);
       overflow: hidden;
     }
 
-    /* ── Mapbox 지도 높이 ─────────────────────────── */
+    /* ── Mapbox 지도 높이 */
     #map { height: 300px; }
 
-    /* ── 커스텀 마커 ──────────────────────────────── */
+    /* ── 커스텀 마커 (기능적 — 변경 없음) */
     .map-pin {
       display: flex;
       flex-direction: column;
@@ -112,257 +200,254 @@
     .map-pin:hover .pin-dot { transform: scale(1.3); }
     [data-type="art"]      .pin-dot { background: #9B7BBE; font-size: 8px; }
     [data-type="landmark"] .pin-dot { background: #4A65BF; font-size: 11px; width: 24px; height: 24px; }
-    [data-type="food"]     .pin-dot { background: #FF8F73; font-size: 11px; width: 24px; height: 24px; }
+    [data-type="food"]     .pin-dot { background: var(--color-food); font-size: 11px; width: 24px; height: 24px; }
     .pin-label {
       margin-top: 2px;
       font-size: 9px;
       font-weight: 700;
-      color: #1A1A1A;
+      color: var(--color-text);
       white-space: nowrap;
       text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 4px #fff;
       line-height: 1;
     }
 
-    /* ── Mapbox 팝업 커스텀 ───────────────────────── */
+    /* ── Mapbox 팝업 커스텀 */
     .mapboxgl-popup-content {
       padding: 8px 14px 10px;
-      border-radius: 10px;
-      font-family: -apple-system, 'Noto Sans KR', sans-serif;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      border-radius: var(--radius-md);
+      font: var(--font-caption);
+      box-shadow: var(--shadow-md);
       min-width: 80px;
     }
-    .popup-name { font-size: 13px; font-weight: 700; color: #1A1A1A; }
-    .popup-type { font-size: 10px; color: #888; margin-top: 2px; }
+    .popup-name { font-size: 13px; font-weight: 700; color: var(--color-text); }
+    .popup-type { font-size: 10px; color: var(--color-text-muted); margin-top: 2px; }
     .mapboxgl-popup-close-button { font-size: 16px; right: 6px; top: 4px; }
 
-    /* ─── 탭 바 ──────────────────────────────── */
-    .tab-bar {
+    /* ── 탭 바 */
+    .pb-tab-bar {
       display: flex;
-      padding: 16px 12px 0;
-      gap: 6px;
+      gap: 0;
+      padding: 0 var(--space-5);
+      border-bottom: 1px solid var(--color-border);
     }
-
-    .tab-btn {
+    .pb-tab-btn {
       flex: 1;
-      padding: 11px 8px;
+      padding: 14px 8px;
       border: none;
-      border-radius: 10px 10px 0 0;
-      font-size: 14px;
+      background: transparent;
+      font: var(--font-body);
       font-weight: 600;
-      background: #E0E0E0;
-      color: var(--color-subtext);
+      color: var(--color-text-muted);
       cursor: pointer;
-      transition: background-color 0.15s, color 0.15s;
+      border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
       font-family: inherit;
+      text-align: center;
+    }
+    .pb-tab-btn.active {
+      color: var(--color-text);
+      border-bottom-color: var(--color-text);
     }
 
-    .tab-btn.active-lunch {
-      background: var(--color-coral);
-      color: white;
-    }
-
-    .tab-btn.active-art {
-      background: var(--color-art);
-      color: white;
-    }
-
-    /* ─── 탭 콘텐츠 ──────────────────────────── */
+    /* ── 탭 콘텐츠 */
     .tab-content {
       display: none;
-      padding: 12px 12px 0;
+      padding: var(--space-4) var(--space-5) 0;
       flex-direction: column;
-      gap: 16px;
+      gap: var(--space-4);
     }
-
     .tab-content.visible {
       display: flex;
     }
 
     .loading {
       text-align: center;
-      padding: 40px;
-      color: var(--color-subtext);
+      padding: var(--space-10);
+      color: var(--color-text-muted);
+      font: var(--font-caption);
     }
 
-    /* ─── 식당 카드 ───────────────────────────────── */
-    .card {
-      background: var(--color-card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .card-image {
+    /* ── 식당/아트 카드 공통 */
+    .pb-card-image {
       width: 100%;
       height: 200px;
       object-fit: cover;
       display: block;
-      background-color: #E0E0E0;
+      background-color: var(--color-surface-raised);
+      margin: calc(-1 * var(--space-5));
+      margin-bottom: 0;
+      width: calc(100% + var(--space-5) * 2);
     }
 
-    .card-body {
-      padding: 16px;
+    .pb-card-body {
+      padding-top: var(--space-4);
     }
 
-    .card-name {
-      font-size: 20px;
-      font-weight: 700;
+    .pb-card-name {
+      font: var(--font-title);
       margin-bottom: 2px;
     }
 
-    .card-name-jp {
+    .pb-card-name-jp {
       font-size: 13px;
-      color: var(--color-subtext);
+      color: var(--color-text-muted);
       font-weight: 400;
       margin-left: 6px;
     }
 
-    .card-section {
-      margin-top: 12px;
+    .pb-card-section {
+      margin-top: var(--space-3);
     }
 
-    .card-section-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--color-subtext);
+    .pb-card-section-label {
+      font: var(--font-micro);
+      color: var(--color-text-sub);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      margin-bottom: var(--space-1);
     }
 
-    .card-menu {
-      font-size: 15px;
-      line-height: 1.5;
+    .pb-card-menu {
+      font: var(--font-body);
       color: var(--color-text);
     }
 
-    .card-reason {
-      font-size: 15px;
-      line-height: 1.6;
+    .pb-card-reason {
+      font: var(--font-body);
       color: var(--color-text);
     }
 
-    .btn-map {
+    /* ── 배지/태그 */
+    .pb-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      font: var(--font-micro);
+      white-space: nowrap;
+    }
+    .pb-tag--accent  { background: var(--color-accent-bg);  color: var(--color-accent); }
+    .pb-tag--warn    { background: var(--color-warn-bg);    color: var(--color-warn); }
+    .pb-tag--ok      { background: var(--color-ok-bg);      color: var(--color-ok); }
+    .pb-tag--error   { background: var(--color-error-bg);   color: var(--color-error); }
+    .pb-tag--neutral { background: var(--color-surface-raised); color: var(--color-text-sub); }
+
+    .pb-tag-row {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      margin-top: var(--space-2);
+    }
+
+    /* ── 버튼 */
+    .pb-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: var(--space-2);
       width: 100%;
-      margin-top: 16px;
-      padding: 14px;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-5);
+      min-height: 52px;
+      margin-top: var(--space-4);
+      font: var(--font-body);
+      font-weight: 700;
       text-decoration: none;
-      min-height: 48px;
-      transition: background-color 0.15s;
+      transition: opacity .15s, transform .1s;
+      cursor: pointer;
+      border: none;
+    }
+    .pb-btn:active { opacity: .75; transform: scale(.98); }
+
+    .pb-btn--primary {
+      background: var(--color-accent);
+      color: white;
+    }
+    .pb-btn--secondary {
+      background: var(--color-surface-raised);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
     }
 
-    .btn-map-lunch {
-      background-color: var(--color-coral);
+    /* ── 알림 박스 */
+    .pb-alert {
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      font: var(--font-caption);
+      line-height: 1.65;
+      margin-bottom: var(--space-3);
+    }
+    .pb-alert--accent {
+      background: var(--color-accent-bg);
+      border-left: 3px solid var(--color-accent);
+      color: #1E3A8A;
+    }
+    .pb-alert--warn {
+      background: var(--color-warn-bg);
+      border-left: 3px solid var(--color-warn);
+      color: #78350F;
     }
 
-    .btn-map-lunch:active {
-      background-color: var(--color-coral-dark);
-    }
-
-    .btn-map-art {
-      background-color: var(--color-art);
-    }
-
-    .btn-map-art:active {
-      background-color: var(--color-art-dark);
-    }
-
-    /* ─── 결제 배지 ──────────────────────────────── */
-    .notice-badge {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 4px 10px;
-      background: #FFF3CD;
-      color: #856404;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    /* ─── 휴무일 배지 ────────────────────────────── */
-    .closed-days-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 8px;
-      padding: 4px 10px;
-      background: #F3F4F6;
-      color: #4B5563;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    /* ─── 길찾기 주의 아코디언 ────────────────────── */
-    .card-warning {
-      margin-top: 12px;
-      border: 1px solid #FFE0B2;
-      border-radius: 8px;
+    /* ── 경고 아코디언 */
+    .pb-warning {
+      margin-top: var(--space-3);
+      border: 1px solid var(--color-warn);
+      border-radius: var(--radius-md);
       overflow: hidden;
+      background: var(--color-warn-bg);
     }
 
-    .card-warning summary {
-      padding: 10px 14px;
-      background: #FFF8E1;
-      color: #E65100;
-      font-size: 14px;
+    .pb-warning summary {
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-warn-bg);
+      color: var(--color-warn);
+      font: var(--font-caption);
       font-weight: 600;
       cursor: pointer;
       list-style: none;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: var(--space-2);
     }
 
-    .card-warning summary::-webkit-details-marker { display: none; }
+    .pb-warning summary::-webkit-details-marker { display: none; }
 
-    .card-warning summary::after {
-      content: '▼';
+    .pb-warning summary::after {
+      content: '\25BC';
       margin-left: auto;
       font-size: 11px;
       transition: transform 0.2s;
     }
 
-    .card-warning[open] summary::after {
+    .pb-warning[open] summary::after {
       transform: rotate(180deg);
     }
 
-    .card-warning-desc {
-      padding: 10px 14px;
-      font-size: 13px;
+    .pb-warning-desc {
+      padding: var(--space-3) var(--space-4);
+      font: var(--font-caption);
       line-height: 1.6;
-      color: #5D4037;
-      background: #FFFDE7;
-      border-top: 1px solid #FFE0B2;
+      color: #78350F;
+      border-top: 1px solid rgba(217,119,6,.2);
     }
 
-    .card-warning-img {
+    .pb-warning-img {
       width: 100%;
       display: block;
     }
 
-    /* ─── 이에프로젝트 카드 ───────────────────────── */
-    .card-art-header {
-      padding: 16px 16px 0;
+    /* ── 이에프로젝트 카드 */
+    .pb-art-header {
+      padding-top: var(--space-4);
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: var(--space-4);
     }
 
-    .card-art-badge {
+    .pb-art-badge {
       width: 46px;
       height: 46px;
-      border-radius: 12px;
+      border-radius: var(--radius-lg);
       background: var(--color-art);
       display: flex;
       align-items: center;
@@ -374,72 +459,66 @@
       letter-spacing: -1px;
     }
 
-    .card-art-meta {
+    .pb-art-meta {
       flex: 1;
     }
 
-    .card-art-meta .card-name {
+    .pb-art-meta .pb-card-name {
       font-size: 19px;
       margin-bottom: 2px;
     }
 
-    .card-artist {
-      font-size: 12px;
-      color: var(--color-subtext);
+    .pb-art-artist {
+      font: var(--font-micro);
+      color: var(--color-text-sub);
       margin-top: 1px;
     }
 
-    .card-artwork {
+    .pb-art-artwork {
       display: inline-block;
-      margin-top: 8px;
-      font-size: 13px;
+      margin-top: var(--space-2);
+      font: var(--font-caption);
       font-style: italic;
-      color: var(--color-art);
+      color: var(--color-accent);
       font-weight: 600;
     }
 
-    .artist-note {
-      margin-top: 12px;
-      padding: 9px 12px;
-      background: #F0EEF9;
-      border-left: 3px solid var(--color-art);
-      border-radius: 0 6px 6px 0;
-      font-size: 12px;
-      color: var(--color-art-dark);
-      line-height: 1.6;
-    }
-
-    /* ─── 푸터 ───────────────────────────────────── */
-    .site-footer {
+    /* ── 푸터 */
+    .pb-footer {
+      padding: var(--space-8) var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom));
       text-align: center;
-      padding: 24px 16px;
-      color: var(--color-subtext);
+      color: var(--color-text-sub);
       font-size: 14px;
+      line-height: 1.8;
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-8);
     }
   </style>
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-brand">마이리얼트립 나오시마 워킹투어</div>
-    <h1 class="header-title">오늘 점심은 이렇게 추천드려요 🍜</h1>
-  </header>
+<div class="pb-wrap">
+
+  <div class="pb-header">
+    <div class="pb-header-badge">🏝️ 마이리얼트립 나오시마 워킹투어</div>
+    <h1>오늘 점심은<br>이렇게 추천드려요</h1>
+  </div>
 
   <!-- ─── 지도: Mapbox GL JS ─────────────────────── -->
-  <section class="map-section">
-    <p class="map-section-title">혼무라 일대 위치 안내</p>
-    <div class="map-wrap">
+  <div class="pb-section">
+    <div class="pb-section-title">혼무라 일대 위치 안내</div>
+    <div class="pb-card" style="padding:0; overflow:hidden;">
       <div id="map"></div>
     </div>
-  </section>
+  </div>
 
   <!-- ─── 탭 바 ───────────────────────────────── -->
-  <div class="tab-bar">
-    <button class="tab-btn active-lunch" id="btn-lunch" data-tab="lunch" aria-selected="true">
-      🍜 점심 식당
+  <div class="pb-tab-bar">
+    <button class="pb-tab-btn active" id="btn-lunch" data-tab="lunch" aria-selected="true">
+      점심 식당
     </button>
-    <button class="tab-btn" id="btn-art" data-tab="art" aria-selected="false">
-      🖼 이에프로젝트 家
+    <button class="pb-tab-btn" id="btn-art" data-tab="art" aria-selected="false">
+      이에프로젝트 家
     </button>
   </div>
 
@@ -453,9 +532,11 @@
     <p class="loading">이에프로젝트 정보 불러오는 중...</p>
   </section>
 
-  <footer class="site-footer">
+  <div class="pb-footer">
     <p>문의사항은 편히 말씀해 주세요 :)</p>
-  </footer>
+  </div>
+
+</div>
 
   <script>
     /* ── 안전 URL 검사 ── */
@@ -468,15 +549,15 @@
     }
 
     /* ── 탭 전환 ── */
-    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabBtns = document.querySelectorAll('.pb-tab-btn');
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.dataset.tab;
         tabBtns.forEach(b => {
-          b.classList.remove('active-lunch', 'active-art');
+          b.classList.remove('active');
           b.setAttribute('aria-selected', 'false');
         });
-        btn.classList.add(tab === 'lunch' ? 'active-lunch' : 'active-art');
+        btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('visible'));
         document.getElementById('tab-' + tab).classList.add('visible');
@@ -489,30 +570,32 @@
       section.innerHTML = '';
       restaurants.forEach(r => {
         const card = document.createElement('article');
-        card.className = 'card';
+        card.className = 'pb-card';
         card.innerHTML = `
-          <img class="card-image" src="${safeUrl(r.image)}" alt="${r.name} 사진" loading="lazy">
-          <div class="card-body">
-            <h2 class="card-name">
-              ${r.name}<span class="card-name-jp">${r.nameJp}</span>
+          <img class="pb-card-image" src="${safeUrl(r.image)}" alt="${r.name} 사진" loading="lazy">
+          <div class="pb-card-body">
+            <h2 class="pb-card-name">
+              ${r.name}<span class="pb-card-name-jp">${r.nameJp}</span>
             </h2>
-            ${r.closedDays ? `<span class="closed-days-badge">🗓 ${r.closedDays}</span>` : ''}
-            ${r.notice ? `<span class="notice-badge">${r.notice}</span>` : ''}
-            <div class="card-section">
-              <p class="card-section-label">🍱 메뉴</p>
-              <p class="card-menu">${r.menu}</p>
+            <div class="pb-tag-row">
+              ${r.closedDays ? `<span class="pb-tag pb-tag--neutral">${r.closedDays}</span>` : ''}
+              ${r.notice ? `<span class="pb-tag pb-tag--warn">${r.notice}</span>` : ''}
             </div>
-            <div class="card-section">
-              <p class="card-section-label">✨ 추천 이유</p>
-              <p class="card-reason">${r.reason}</p>
+            <div class="pb-card-section">
+              <p class="pb-card-section-label">메뉴</p>
+              <p class="pb-card-menu">${r.menu}</p>
+            </div>
+            <div class="pb-card-section">
+              <p class="pb-card-section-label">추천 이유</p>
+              <p class="pb-card-reason">${r.reason}</p>
             </div>
             ${r.warningImage ? `
-            <details class="card-warning"${r.warningOpen ? ' open' : ''}>
-              <summary>⚠️ 구글맵 위치 주의 — 약도 확인 필요</summary>
-              <p class="card-warning-desc">지도 앱이 안내하는 방향과 실제 위치가 달라요. 근처에 도착하면 인근 안내판 약도를 확인하거나 아래 안내도를 참고하세요.</p>
-              <img class="card-warning-img" src="${safeUrl(r.warningImage)}" alt="${r.name} 찾아가는 길 안내도" loading="lazy">
+            <details class="pb-warning"${r.warningOpen ? ' open' : ''}>
+              <summary>구글맵 위치 주의 — 약도 확인 필요</summary>
+              <p class="pb-warning-desc">지도 앱이 안내하는 방향과 실제 위치가 달라요. 근처에 도착하면 인근 안내판 약도를 확인하거나 아래 안내도를 참고하세요.</p>
+              <img class="pb-warning-img" src="${safeUrl(r.warningImage)}" alt="${r.name} 찾아가는 길 안내도" loading="lazy">
             </details>` : ''}
-            <a class="btn-map btn-map-lunch"
+            <a class="pb-btn pb-btn--primary"
                href="${safeUrl(r.mapUrl)}"
                target="_blank"
                rel="noopener noreferrer"
@@ -531,31 +614,33 @@
       section.innerHTML = '';
       houses.forEach(h => {
         const card = document.createElement('article');
-        card.className = 'card';
+        card.className = 'pb-card';
         card.innerHTML = `
-          ${h.image ? `<img class="card-image" src="${safeUrl(h.image)}" alt="${h.name} 사진" loading="lazy">` : ''}
-          <div class="card-art-header">
-            <div class="card-art-badge">家</div>
-            <div class="card-art-meta">
-              <h2 class="card-name">
-                ${h.name}<span class="card-name-jp">${h.nameJp}</span>
+          ${h.image ? `<img class="pb-card-image" src="${safeUrl(h.image)}" alt="${h.name} 사진" loading="lazy">` : ''}
+          <div class="pb-art-header">
+            <div class="pb-art-badge">家</div>
+            <div class="pb-art-meta">
+              <h2 class="pb-card-name">
+                ${h.name}<span class="pb-card-name-jp">${h.nameJp}</span>
               </h2>
-              <p class="card-artist">${h.artist} · ${h.artistEn}</p>
-              <span class="card-artwork">「${h.artwork}」</span>
+              <p class="pb-art-artist">${h.artist} · ${h.artistEn}</p>
+              <span class="pb-art-artwork">${h.artwork}</span>
             </div>
           </div>
-          <div class="card-body">
-            <div class="card-section">
-              <p class="card-section-label">🎨 공간 · 작품</p>
-              <p class="card-reason">${h.description}</p>
+          <div class="pb-card-body">
+            <div class="pb-card-section">
+              <p class="pb-card-section-label">공간 · 작품</p>
+              <p class="pb-card-reason">${h.description}</p>
             </div>
-            <div class="card-section">
-              <p class="card-section-label">✨ 포인트</p>
-              <p class="card-reason">${h.highlight}</p>
+            <div class="pb-card-section">
+              <p class="pb-card-section-label">포인트</p>
+              <p class="pb-card-reason">${h.highlight}</p>
             </div>
-            ${h.notice ? `<span class="notice-badge">${h.notice}</span>` : ''}
-            <p class="artist-note">💎 ${h.artistNote}</p>
-            <a class="btn-map btn-map-art"
+            ${h.notice ? `<div class="pb-tag-row"><span class="pb-tag pb-tag--warn">${h.notice}</span></div>` : ''}
+            <div class="pb-alert pb-alert--accent" style="margin-top: var(--space-3);">
+              ${h.artistNote}
+            </div>
+            <a class="pb-btn pb-btn--secondary"
                href="${safeUrl(h.mapUrl)}"
                target="_blank"
                rel="noopener noreferrer"
