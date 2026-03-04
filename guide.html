@@ -2,291 +2,313 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>나오시마 자유여행 필수 정보</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0047FF">
+<title>나오시마 자유여행 필수 정보 | 마이리얼트립</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', -apple-system, sans-serif;
-    font-size: 13px;
-    color: #1A1A2E;
-    background: #F5F7FF;
-    line-height: 1.55;
-    margin: 0 auto;
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --blue: #0047FF;
+    --blue-light: #EEF3FF;
+    --blue-dark: #0036CC;
+    --green: #007A45;
+    --green-light: #E6F9F0;
+    --yellow: #FFB300;
+    --yellow-light: #FFF8E1;
+    --red: #CC0000;
+    --red-light: #FFEAEA;
+    --text: #1A1A2E;
+    --text-sub: #555;
+    --border: #E0E8FF;
+    --bg: #F4F6FF;
   }
 
-  .page {
-    max-width: 480px;
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 520px;
     margin: 0 auto;
     background: #fff;
-    padding-bottom: 14px;
+    min-height: 100vh;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
   }
 
-  /* ── 헤더 (압축) */
+  /* ── 헤더 */
   .header {
-    background: linear-gradient(135deg, #0047FF 0%, #2E6AFF 100%);
-    padding: 14px 16px 12px;
+    background: linear-gradient(150deg, #0047FF 0%, #3366FF 100%);
+    padding: calc(20px + env(safe-area-inset-top)) 20px 22px;
     color: white;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  .header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
   }
   .header-badge {
-    background: rgba(255,255,255,0.22);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.2);
     border-radius: 20px;
-    padding: 2px 9px;
-    font-size: 10px;
+    padding: 4px 12px;
+    font-size: 12px;
     font-weight: 700;
+    margin-bottom: 12px;
   }
-  .header h1 { font-size: 17px; font-weight: 800; }
-  .header .subtitle { font-size: 11px; opacity: 0.85; }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-size: 13.5px;
+    opacity: 0.88;
+    line-height: 1.6;
+  }
 
   /* ── 서머리 바 */
   .summary-bar {
-    background: #F0F4FF;
-    padding: 9px 16px;
+    background: var(--blue-light);
+    padding: 14px 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5px 10px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    gap: 8px 12px;
   }
   .summary-item {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px; color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #333;
   }
   .s-dot {
-    width: 14px; height: 14px; border-radius: 50%;
-    background: #0047FF; color: white;
-    font-size: 8px; font-weight: 800;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 
   /* ── 알림 배너 */
   .alert-banner {
-    margin: 10px 14px 8px;
-    background: #FFF8E1;
-    border: 1.5px solid #FFB300;
-    border-radius: 9px;
-    padding: 8px 12px;
-    font-size: 11.5px;
+    margin: 14px 16px 10px;
+    background: var(--yellow-light);
+    border: 1.5px solid var(--yellow);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13.5px;
     font-weight: 700;
     color: #5D3A00;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    line-height: 1.5;
   }
 
   /* ── 섹션 */
-  .section { margin: 0 14px 9px; }
+  .section { padding: 0 16px; margin-bottom: 12px; }
   .section-title {
-    font-size: 12.5px;
+    font-size: 15px;
     font-weight: 800;
-    color: #0047FF;
-    margin-bottom: 6px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    color: var(--blue);
+    margin-bottom: 10px;
+    padding-top: 4px;
   }
 
   /* ── 카드 */
   .card {
-    border: 1.5px solid #E8EEFF;
-    border-radius: 11px;
-    padding: 11px 13px;
-    margin-bottom: 7px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #fff;
   }
 
-  .info-row { display: flex; gap: 7px; margin-bottom: 4px; font-size: 11.5px; align-items: baseline; }
-  .info-label { font-weight: 700; color: #0047FF; white-space: nowrap; min-width: 52px; font-size: 10.5px; }
+  .info-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    align-items: flex-start;
+  }
+  .info-row:last-of-type { margin-bottom: 0; }
+  .info-label {
+    font-weight: 700;
+    color: var(--blue);
+    white-space: nowrap;
+    min-width: 60px;
+    font-size: 12px;
+    padding-top: 2px;
+  }
 
   .highlight {
-    background: #EEF3FF;
-    border-radius: 8px;
-    padding: 8px 11px;
-    font-size: 11.5px;
-    color: #0036CC;
-    margin-bottom: 7px;
-    line-height: 1.6;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    background: var(--blue-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    color: var(--blue-dark);
+    margin-bottom: 10px;
+    line-height: 1.65;
   }
   .warn-box {
-    background: #FFF8E1;
-    border-radius: 8px;
-    padding: 8px 11px;
-    font-size: 11.5px;
+    background: var(--yellow-light);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13.5px;
     color: #5D3A00;
-    margin-top: 7px;
-    line-height: 1.6;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    margin-top: 10px;
+    line-height: 1.65;
   }
 
   /* ── 태그 */
   .tag {
-    display: inline-block; font-size: 10px; border-radius: 5px;
-    padding: 1px 6px; font-weight: 700;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    display: inline-block;
+    font-size: 11.5px;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: 700;
   }
-  .tag-red   { background: #FFEAEA; color: #CC0000; }
-  .tag-blue  { background: #E8EEFF; color: #0047FF; }
-  .tag-green { background: #E6F9F0; color: #007A45; }
-  .tag-warn  { background: #FFF3CD; color: #7D4E00; }
+  .tag-red   { background: var(--red-light);   color: var(--red); }
+  .tag-blue  { background: var(--blue-light);  color: var(--blue); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-warn  { background: var(--yellow-light); color: #7D4E00; }
 
-  /* ── 링크 버튼 (모두 버튼처럼) */
+  /* ── 버튼 (모든 링크) — 최소 터치 영역 48px */
   .btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 9px;
-    padding: 9px 13px;
-    margin-top: 7px;
-    font-size: 12px;
+    border-radius: 12px;
+    padding: 13px 16px;
+    min-height: 52px;
+    margin-top: 10px;
+    font-size: 14px;
     font-weight: 700;
     text-decoration: none;
+    transition: opacity 0.15s, transform 0.1s;
     cursor: pointer;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
-  .btn-blue {
-    background: #0047FF;
-    color: white;
-  }
-  .btn-blue-light {
-    background: #EEF3FF;
-    color: #0047FF;
-  }
-  .btn-green {
-    background: #E6F9F0;
-    color: #007A45;
-  }
-  .btn .btn-arrow {
-    width: 22px; height: 22px;
-    background: rgba(255,255,255,0.25);
+  .btn:active { opacity: 0.75; transform: scale(0.98); }
+  .btn-blue       { background: var(--blue);       color: white; }
+  .btn-blue-light { background: var(--blue-light); color: var(--blue); }
+  .btn-green-light{ background: var(--green-light);color: var(--green); }
+  .btn-left { display: flex; flex-direction: column; gap: 2px; }
+  .btn-sub  { font-size: 11.5px; font-weight: 400; opacity: 0.72; }
+  .btn-arrow {
+    width: 28px; height: 28px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; flex-shrink: 0;
+    font-size: 14px;
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.22);
   }
-  .btn-blue-light .btn-arrow, .btn-green .btn-arrow {
-    background: rgba(0,71,255,0.1);
-    color: #0047FF;
-  }
-  .btn-green .btn-arrow { background: rgba(0,122,69,0.12); color: #007A45; }
-  .btn-left { display: flex; flex-direction: column; gap: 1px; }
-  .btn-sub { font-size: 10px; font-weight: 400; opacity: 0.75; }
+  .btn-blue-light .btn-arrow,
+  .btn-green-light .btn-arrow { background: rgba(0,0,0,0.06); }
 
   /* ── 버스 카드 */
   .bus-card {
-    border: 1.5px solid #E8EEFF;
-    border-radius: 10px;
-    padding: 9px 12px;
-    margin-bottom: 6px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
   }
-  .bus-card.green { border-color: #C2EDD9; background: #F5FDF9; }
-  .bus-card-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }
+  .bus-card.green { border-color: #A8DFC4; background: #F3FCF7; }
+  .bus-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .bus-body { font-size: 13.5px; color: var(--text-sub); line-height: 1.65; }
 
   /* ── 구분선 */
-  .divider { height: 6px; background: #F5F7FF; margin: 8px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .divider { height: 8px; background: var(--bg); margin: 14px 0; }
 
-  /* ── 식당 2열 그리드 */
+  /* ── 식당 그리드 */
   .rest-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    margin-bottom: 0;
+    gap: 8px;
   }
   .rest-cell {
-    border: 1.5px solid #E8EEFF;
-    border-radius: 9px;
-    padding: 9px 10px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 12px 10px;
   }
-  .rest-num { font-size: 10px; font-weight: 800; color: #0047FF; margin-bottom: 2px; }
-  .rest-name { font-size: 12px; font-weight: 700; color: #1A1A2E; }
-  .rest-info { font-size: 10.5px; color: #666; margin-top: 2px; line-height: 1.45; }
-  .rest-tags { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 3px; }
+  .rest-num  { font-size: 11px; font-weight: 800; color: var(--blue); margin-bottom: 3px; }
+  .rest-name { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.3; }
+  .rest-info { font-size: 12px; color: #666; margin-top: 3px; line-height: 1.5; }
+  .rest-tags { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
 
   /* ── 식당 지도 CTA */
   .map-cta {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(135deg, #0047FF 0%, #2E6AFF 100%);
-    border-radius: 12px;
-    padding: 13px 16px;
-    margin-top: 8px;
+    background: linear-gradient(135deg, #0047FF 0%, #3366FF 100%);
+    border-radius: 16px;
+    padding: 16px 18px;
+    min-height: 64px;
+    margin-top: 10px;
     text-decoration: none;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    transition: opacity 0.15s, transform 0.1s;
   }
-  .map-cta-left { color: white; }
-  .map-cta-label { font-size: 10.5px; opacity: 0.82; margin-bottom: 2px; }
-  .map-cta-title { font-size: 14px; font-weight: 800; }
+  .map-cta:active { opacity: 0.75; transform: scale(0.98); }
+  .map-cta-left  { color: white; }
+  .map-cta-label { font-size: 12px; opacity: 0.82; margin-bottom: 3px; }
+  .map-cta-title { font-size: 16px; font-weight: 800; }
   .map-cta-arrow {
-    width: 34px; height: 34px;
+    width: 38px; height: 38px;
     background: rgba(255,255,255,0.22);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; color: white; flex-shrink: 0;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    font-size: 18px; color: white; flex-shrink: 0;
   }
 
   /* ── 푸터 */
   .footer {
-    margin: 10px 14px 0;
-    background: linear-gradient(135deg, #0047FF 0%, #2E6AFF 100%);
-    border-radius: 13px;
-    padding: 14px 16px;
+    margin: 12px 16px 0;
+    background: linear-gradient(135deg, #0047FF 0%, #3366FF 100%);
+    border-radius: 18px;
+    padding: 20px 18px;
     color: white;
     text-align: center;
-    font-size: 12.5px;
-    line-height: 1.75;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    font-size: 14px;
+    line-height: 1.8;
   }
-  .footer .stars { font-size: 15px; color: #FFD600; margin: 3px 0; display: block; }
-  .footer .footer-sub { font-size: 10.5px; opacity: 0.78; margin-top: 4px; }
+  .footer .stars { font-size: 20px; color: #FFD600; margin: 6px 0; display: block; letter-spacing: 2px; }
+  .footer .footer-sub { font-size: 12px; opacity: 0.75; margin-top: 8px; }
 
-  .note { font-size: 10.5px; color: #aaa; margin-top: 5px; }
-
-  @media print {
-    body { background: white; }
-    .page { max-width: 100%; box-shadow: none; }
-  }
+  .note { font-size: 12px; color: #aaa; margin-top: 8px; }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<!-- ══════════ PAGE 1 ══════════ -->
-<div class="page">
-
+  <!-- 헤더 -->
   <div class="header">
-    <div class="header-row">
-      <div class="header-badge">🏝️ 마이리얼트립 나오시마 워킹투어</div>
-    </div>
-    <h1>나오시마 자유여행 필수 정보</h1>
-    <p class="subtitle">이번엔 함께하지 못했지만, 알차게 즐길 수 있게 준비했어요 😊</p>
+    <div class="header-badge">🏝️ 마이리얼트립 나오시마 워킹투어</div>
+    <h1>나오시마 자유여행<br>필수 정보</h1>
+    <p class="subtitle">이번엔 함께하지 못했지만,<br>나오시마를 알차게 즐길 수 있도록 준비했어요 😊</p>
   </div>
 
+  <!-- 서머리 -->
   <div class="summary-bar">
     <div class="summary-item"><div class="s-dot">1</div><span><strong>지중미술관</strong> 사전예약 필수</span></div>
-    <div class="summary-item"><div class="s-dot">2</div><span><strong>페리</strong> 현장 현금만 가능</span></div>
-    <div class="summary-item"><div class="s-dot">3</div><span><strong>버스</strong> 잔돈 100엔 미리 준비</span></div>
-    <div class="summary-item"><div class="s-dot">4</div><span><strong>나머지 미술관</strong> 당일 방문 OK</span></div>
+    <div class="summary-item"><div class="s-dot">2</div><span><strong>페리</strong> 현장 현금만</span></div>
+    <div class="summary-item"><div class="s-dot">3</div><span><strong>버스</strong> 잔돈 100엔 준비</span></div>
+    <div class="summary-item"><div class="s-dot">4</div><span><strong>나머지 미술관</strong> 당일 OK</span></div>
   </div>
 
+  <!-- 배너 -->
   <div class="alert-banner">
     ⚠️ 나오시마에서 유일하게 사전예약이 꼭 필요한 곳 → 지중미술관
   </div>
@@ -296,7 +318,7 @@
     <div class="section-title">🎨 지중미술관 예약</div>
     <div class="highlight">
       <strong>왜 미리 예약해야 하나요?</strong><br>
-      시간대별 입장 인원을 엄격하게 제한해요. 예약 없이 가시면 잔여석이 없을 경우 입장이 어려울 수 있답니다!
+      시간대별로 입장 인원을 엄격하게 제한해요. 예약 없이 가시면 잔여석이 없을 경우 입장이 어려울 수 있답니다!
     </div>
     <div class="card">
       <div class="info-row">
@@ -307,9 +329,9 @@
         <span class="info-label">사전 준비</span>
         <span>회원가입 + 결제수단 등록 <span class="tag tag-warn">VISA/Mastercard 권장</span></span>
       </div>
-      <div class="info-row" style="margin-bottom:0">
+      <div class="info-row">
         <span class="info-label">나머지 관</span>
-        <span>이우환·이에프로젝트·신미술관은 당일 방문 OK, 온라인 구매 시 할인 + QR 즉시 발급</span>
+        <span>이우환·이에프로젝트·신미술관은 당일 방문 OK — 온라인 구매 시 할인 + QR 즉시 발급</span>
       </div>
       <a class="btn btn-blue" href="https://benesse-artsite.jp/en/">
         <div class="btn-left">
@@ -331,9 +353,9 @@
       </div>
       <div class="info-row">
         <span class="info-label">구매</span>
-        <span><span class="tag tag-red">현장 현금만</span> 사전예약·카드 불가해요</span>
+        <span><span class="tag tag-red">현장 현금만</span>&nbsp; 사전예약·카드 불가해요</span>
       </div>
-      <div class="info-row" style="margin-bottom:0">
+      <div class="info-row">
         <span class="info-label">소요시간</span>
         <span>다카마쓰 → 나오시마 약 50~60분</span>
       </div>
@@ -350,15 +372,16 @@
     </div>
   </div>
 
+  <div class="divider"></div>
 
   <!-- 버스 -->
-  <div class="section" style="margin-top:10px;">
+  <div class="section">
     <div class="section-title">🚌 섬 내 이동</div>
     <div class="bus-card">
-      <div class="bus-card-title"><span class="tag tag-blue">시내버스</span> 100엔 균일</div>
-      <div style="font-size:11.5px; color:#444; margin-bottom:4px;">
+      <div class="bus-card-title"><span class="tag tag-blue">시내버스</span>&nbsp;100엔 균일</div>
+      <div class="bus-body">
         미야노우라항 ↔ 혼무라 ↔ 쓰쓰지소(지중·베네세) 구역 연결<br>
-        <strong>내릴 때</strong> 요금을 내요. 잔돈 미리 준비해두시면 편해요 😊
+        <strong>내릴 때</strong> 요금을 내요. 잔돈을 미리 준비해두시면 편해요 😊
       </div>
       <a class="btn btn-blue-light" href="https://naoshima.net/wp-content/uploads/2015/11/4f996173445a22bb5f1902e6987e97dc.pdf">
         <div class="btn-left">
@@ -369,8 +392,8 @@
       </a>
     </div>
     <div class="bus-card green">
-      <div class="bus-card-title"><span class="tag tag-green">베네세 무료 셔틀</span> 무료</div>
-      <div style="font-size:11.5px; color:#444;">
+      <div class="bus-card-title"><span class="tag tag-green">베네세 무료 셔틀</span>&nbsp;무료</div>
+      <div class="bus-body">
         미야노우라항 ↔ 베네세 뮤지엄·지중미술관 구역 무료 운행<br>
         미술관 관람객이라면 누구든 탑승하실 수 있어요!
       </div>
@@ -379,7 +402,7 @@
 
   <div class="divider"></div>
 
-  <!-- 식당 2열 -->
+  <!-- 식당 -->
   <div class="section">
     <div class="section-title">🍽️ 식사 추천</div>
     <div class="rest-grid">
@@ -397,12 +420,12 @@
       <div class="rest-cell">
         <div class="rest-num">03</div>
         <div class="rest-name">사라장</div>
-        <div class="rest-info">갈레뜨, 크레페<br>관람 중간 쉬어가기 좋아요</div>
+        <div class="rest-info">갈레뜨, 크레페<br>관람 중간 쉬어가기</div>
         <div class="rest-tags"><span class="tag tag-warn">월 정휴</span></div>
       </div>
       <div class="rest-cell">
         <div class="rest-num">04</div>
-        <div class="rest-name">루크스 피자&그릴</div>
+        <div class="rest-name">루크스 피자&amp;그릴</div>
         <div class="rest-info">화덕 피자, 파스타<br>든든하게 드시고 싶을 때</div>
         <div class="rest-tags"><span class="tag tag-warn">월·화 정휴</span></div>
       </div>
@@ -416,7 +439,7 @@
         <div class="rest-num">06</div>
         <div class="rest-name">APRON CAFE</div>
         <div class="rest-info">함박스테이크 정식<br>혼무라 가정식</div>
-        <div class="rest-tags"><span class="tag tag-red">현금만</span><span class="tag tag-warn">월 정휴</span></div>
+        <div class="rest-tags"><span class="tag tag-red">현금만</span> <span class="tag tag-warn">월 정휴</span></div>
       </div>
     </div>
     <p class="note">1인 ¥2,000~3,000 내외 · 정휴일은 변동될 수 있으니 방문 전 꼭 확인해보세요</p>
@@ -430,15 +453,16 @@
     </a>
   </div>
 
+  <!-- 푸터 -->
   <div class="footer">
-    이번엔 함께하지 못했지만, 다음 여행에서 꼭 만나요 😊<br>
+    이번엔 함께하지 못했지만,<br>
+    다음 여행에서 꼭 만나요 😊
     <span class="stars">★★★★★</span>
     여행이 즐거우셨다면 <strong>마이리얼트립 앱</strong>에서<br>
     <strong>따뜻한 후기</strong>로 응원해주세요 🙏
     <p class="footer-sub">마이리얼트립 나오시마 워킹투어</p>
   </div>
 
-</div><!-- /page 2 -->
-
+</div>
 </body>
 </html>
