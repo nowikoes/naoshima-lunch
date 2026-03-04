@@ -149,14 +149,11 @@ body {
 /* ── 요약 chip row */
 .pb-summary-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   padding: 16px 20px;
-  overflow-x: auto;
   border-bottom: 1px solid var(--color-border);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
-.pb-summary-row::-webkit-scrollbar { display: none; }
 .pb-chip {
   display: inline-flex;
   align-items: center;
@@ -168,7 +165,6 @@ body {
   background: var(--color-surface-raised);
   color: var(--color-text-sub);
   border: 1px solid var(--color-border);
-  flex-shrink: 0;
 }
 
 /* ── 섹션 */
