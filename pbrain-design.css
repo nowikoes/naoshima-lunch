@@ -124,8 +124,11 @@ body {
   letter-spacing: -0.03em;
   margin-bottom: var(--space-2);
 }
-.pb-header .pb-subtitle {
+.pb-subtitle {
   font: var(--font-caption);
+  color: var(--color-text-sub);
+}
+.pb-header .pb-subtitle {
   color: rgba(255,255,255,.6);
 }
 
