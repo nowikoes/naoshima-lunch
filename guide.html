@@ -41,6 +41,7 @@
   /* 성공 */
   --color-ok:            #16A34A;
   --color-ok-bg:         #F0FDF4;
+  --color-ok-border:     #BBF7D0;
 
   /* 오류 */
   --color-error:         #DC2626;
@@ -189,7 +190,7 @@ body {
 }
 .pb-card--ok {
   background: var(--color-ok-bg);
-  border-color: #BBF7D0;
+  border-color: var(--color-ok-border);
 }
 
 /* ── 정보 행 */
@@ -316,6 +317,7 @@ body {
   color: var(--color-text-sub);
   line-height: 1.65;
 }
+.pb-bus-body strong { color: var(--color-text); }
 
 /* ── 식당 그리드 */
 .rest-grid {
@@ -334,6 +336,27 @@ body {
 .rest-name { font-size: 13.5px; font-weight: 700; color: var(--color-text); line-height: 1.3; }
 .rest-info { font-size: 12px; color: var(--color-text-sub); margin-top: 3px; line-height: 1.5; }
 .rest-tags { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* ── 식당 지도 CTA (featured 버튼) */
+.pb-btn--featured {
+  min-height: 64px;
+  margin-top: var(--space-4);
+}
+.pb-btn--featured .pb-btn-label {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 3px;
+}
+.pb-btn--featured .pb-btn-title {
+  font-size: 16px;
+  font-weight: 800;
+}
+.pb-btn--featured .pb-btn-arrow {
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+}
 
 /* ── 푸터 */
 .pb-footer {
@@ -447,7 +470,7 @@ body {
       <div class="pb-bus-title"><span class="pb-tag pb-tag--accent">시내버스</span>&nbsp;100엔 균일</div>
       <div class="pb-bus-body">
         미야노우라항 ↔ 혼무라 ↔ 쓰쓰지소(지중·베네세) 구역 연결<br>
-        <strong style="color:var(--color-text)">내릴 때</strong> 요금을 내요. 잔돈을 미리 준비해두시면 편해요 😊
+        <strong>내릴 때</strong> 요금을 내요. 잔돈을 미리 준비해두시면 편해요 😊
       </div>
       <a class="pb-btn pb-btn--secondary" href="https://naoshima.net/wp-content/uploads/2015/11/4f996173445a22bb5f1902e6987e97dc.pdf">
         <div class="pb-btn-left">
@@ -508,12 +531,12 @@ body {
       </div>
     </div>
     <p class="pb-note">1인 ¥2,000~3,000 내외 · 정휴일은 변동될 수 있으니 방문 전 꼭 확인해보세요</p>
-    <a class="pb-btn pb-btn--primary" href="https://nowikoes.github.io/naoshima-lunch/" style="margin-top: 16px; min-height: 64px;">
+    <a class="pb-btn pb-btn--primary pb-btn--featured" href="https://nowikoes.github.io/naoshima-lunch/">
       <div class="pb-btn-left">
-        <span style="font-size: 12px; font-weight: 400; color: rgba(255,255,255,.7); margin-bottom: 3px;">📍 지도 + 메뉴 + 사진 한눈에 보기</span>
-        <span style="font-size: 16px; font-weight: 800;">식당 지도 바로가기</span>
+        <span class="pb-btn-label">📍 지도 + 메뉴 + 사진 한눈에 보기</span>
+        <span class="pb-btn-title">식당 지도 바로가기</span>
       </div>
-      <div class="pb-btn-arrow" style="width: 38px; height: 38px; font-size: 18px;">→</div>
+      <div class="pb-btn-arrow">→</div>
     </a>
   </div>
 
