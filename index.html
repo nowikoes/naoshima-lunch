@@ -484,6 +484,56 @@
       font-weight: 600;
     }
 
+    /* ── 이미지 래퍼 (오버레이용) */
+    .pb-card-image-wrap {
+      position: relative;
+      margin: calc(-1 * var(--space-5));
+      margin-bottom: 0;
+    }
+    .pb-card-image-wrap .pb-card-image {
+      margin: 0;
+      width: 100%;
+    }
+    .pb-closed-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.42);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pb-closed-label {
+      background: rgba(220,38,38,0.92);
+      color: white;
+      font: var(--font-heading);
+      padding: 7px 20px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.01em;
+    }
+
+    /* ── 휴무 카드 전체 흐림 */
+    .pb-card--closed {
+      opacity: 0.52;
+    }
+
+    /* ── 섹션 구분선 */
+    .pb-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) 0 var(--space-1);
+      color: var(--color-text-muted);
+      font: var(--font-micro);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .pb-divider::before, .pb-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border);
+    }
+
     /* ── 푸터 */
     .pb-footer {
       padding: var(--space-8) var(--space-5) calc(var(--space-5) + env(safe-area-inset-bottom));
@@ -565,21 +615,37 @@
       });
     });
 
+    /* ── 오늘 휴무 여부 판단 ── */
+    const DAY_MAP = { '월': 1, '화': 2, '수': 3, '목': 4, '금': 5, '토': 6, '일': 0 };
+    const TODAY = new Date().getDay();
+    function isClosedToday(closedDays) {
+      if (!closedDays) return false;
+      return Object.entries(DAY_MAP).some(([kr, num]) => closedDays.includes(kr) && TODAY === num);
+    }
+
     /* ── 식당 카드 렌더 ── */
     function renderRestaurants(restaurants) {
       const section = document.getElementById('tab-lunch');
       section.innerHTML = '';
-      restaurants.forEach(r => {
+
+      const open   = restaurants.filter(r => !isClosedToday(r.closedDays));
+      const closed = restaurants.filter(r =>  isClosedToday(r.closedDays));
+
+      const buildCard = (r) => {
+        const isClosed = isClosedToday(r.closedDays);
         const card = document.createElement('article');
-        card.className = 'pb-card';
+        card.className = 'pb-card' + (isClosed ? ' pb-card--closed' : '');
         card.innerHTML = `
-          <img class="pb-card-image" src="${safeUrl(r.image)}" alt="${r.name} 사진" loading="lazy">
+          <div class="pb-card-image-wrap">
+            <img class="pb-card-image" src="${safeUrl(r.image)}" alt="${r.name} 사진" loading="lazy">
+            ${isClosed ? `<div class="pb-closed-overlay"><span class="pb-closed-label">오늘 휴무</span></div>` : ''}
+          </div>
           <div class="pb-card-body">
             <h2 class="pb-card-name">
               ${r.name}<span class="pb-card-name-jp">${r.nameJp}</span>
             </h2>
             <div class="pb-tag-row">
-              ${r.closedDays ? `<span class="pb-tag pb-tag--neutral">${r.closedDays}</span>` : ''}
+              ${r.closedDays ? `<span class="pb-tag ${isClosed ? 'pb-tag--error' : 'pb-tag--neutral'}">${r.closedDays}</span>` : ''}
               ${r.notice ? `<span class="pb-tag pb-tag--warn">${r.notice}</span>` : ''}
             </div>
             <div class="pb-card-section">
@@ -596,7 +662,7 @@
               <p class="pb-warning-desc">지도 앱이 안내하는 방향과 실제 위치가 달라요. 근처에 도착하면 인근 안내판 약도를 확인하거나 아래 안내도를 참고하세요.</p>
               <img class="pb-warning-img" src="${safeUrl(r.warningImage)}" alt="${r.name} 찾아가는 길 안내도" loading="lazy">
             </details>` : ''}
-            <a class="pb-btn pb-btn--primary"
+            <a class="pb-btn ${isClosed ? 'pb-btn--secondary' : 'pb-btn--primary'}"
                href="${safeUrl(r.mapUrl)}"
                target="_blank"
                rel="noopener noreferrer"
@@ -605,8 +671,18 @@
             </a>
           </div>
         `;
-        section.appendChild(card);
-      });
+        return card;
+      };
+
+      open.forEach(r => section.appendChild(buildCard(r)));
+
+      if (closed.length > 0) {
+        const divider = document.createElement('div');
+        divider.className = 'pb-divider';
+        divider.textContent = '오늘 휴무';
+        section.appendChild(divider);
+        closed.forEach(r => section.appendChild(buildCard(r)));
+      }
     }
 
     /* ── 이에프로젝트 카드 렌더 ── */
